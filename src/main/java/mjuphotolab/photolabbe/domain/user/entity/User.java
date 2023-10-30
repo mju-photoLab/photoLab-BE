@@ -50,14 +50,16 @@ public class User {
 		this.password = passwordEncoder.encode(this.password);
 	}
 
-	public void updateRefreshToken(String updateRefreshToken) {
-		this.refreshToken = updateRefreshToken;
+	public void updateNickname(String updateNickname) {
+		this.nickname = updateNickname;
 	}
 
-	public void update(final UpdateUserRequest request) {
-		this.nickname = request.getNickname() != null ? request.getNickname() : this.nickname;
-		this.email = request.getEmail() != null ? request.getEmail() : this.email;
-		this.password = request.getPassword() != null ? request.getPassword() : this.password;
+	public void updatePassword(String updatePassword, PasswordEncoder passwordEncoder) {
+		this.password = passwordEncoder.encode(updatePassword);
+	}
+
+	public void updateRefreshToken(String updateRefreshToken) {
+		this.refreshToken = updateRefreshToken;
 	}
 }
 
