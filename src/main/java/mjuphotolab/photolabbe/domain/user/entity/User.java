@@ -1,8 +1,5 @@
 package mjuphotolab.photolabbe.domain.user.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.persistence.Entity;
@@ -16,7 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import mjuphotolab.photolabbe.domain.user.controller.dto.request.UpdateUserRequest;
 
 @Entity
 @Getter
@@ -35,6 +31,11 @@ public class User {
 	private String password;
 
 	private String email;
+
+	@Enumerated(EnumType.STRING)
+	private SocialType socialType;
+
+	private String socialId;
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
