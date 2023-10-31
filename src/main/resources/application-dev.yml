@@ -15,9 +15,9 @@ spring:
         format_sql: true
     defer-datasource-initialization: false
 
-    sql:
-      init:
-        mode: never
+  sql:
+    init:
+      mode: never
 
 jwt:
   secretKey: ${JWT_SECRET}
