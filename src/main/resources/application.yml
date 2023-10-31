@@ -14,7 +14,7 @@ spring:
       ddl-auto: none
 
 jwt:
-  secretKey: secretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKey
+  secretKey: ${JWT_SECRET}
 
   access:
     expiration: 3600000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
