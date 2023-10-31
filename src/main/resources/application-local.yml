@@ -1,0 +1,30 @@
+# local 환경
+spring:
+  config:
+    activate:
+      on-profile: "local"
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost/~/photolab
+    username: sa
+    password:
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: 'true'
+        show_sql: 'true'
+
+    hibernate:
+      ddl-auto: create
+
+    defer-datasource-initialization: true # (2.5~) Hibernate 초기화 이후 data.sql 실행
+
+  sql:
+    init:
+      mode: always
+
+  h2:
+    console:
+      enabled: true
