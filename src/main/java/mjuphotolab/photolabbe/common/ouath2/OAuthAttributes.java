@@ -1,7 +1,7 @@
 package mjuphotolab.photolabbe.common.ouath2;
 
 import java.util.Map;
-import java.util.UUID;
+
 
 import lombok.Builder;
 import lombok.Getter;
@@ -49,14 +49,13 @@ public class OAuthAttributes {
 	/**
 	 * of메소드로 OAuthAttributes 객체가 생성되어, 유저 정보들이 담긴 OAuth2UserInfo가 소셜 타입별로 주입된 상태
 	 * OAuth2UserInfo에서 socialId(식별값), nickname build
-	 * email에는 UUID로 중복 없는 랜덤 값 생성
 	 * role은 GUEST로 설정
 	 */
 	public User toEntity(SocialType socialType, OAuth2UserInfo oauth2UserInfo) {
 		return User.builder()
 			.socialType(socialType)
 			.socialId(oauth2UserInfo.getId())
-			.email(UUID.randomUUID() + "@socialUser.com")
+			.email(oauth2UserInfo.getEmail())
 			.nickname(oauth2UserInfo.getNickname())
 			.role(Role.GUEST)
 			.build();

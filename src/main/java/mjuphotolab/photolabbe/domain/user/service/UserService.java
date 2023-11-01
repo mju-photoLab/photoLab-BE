@@ -5,12 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import mjuphotolab.photolabbe.domain.user.controller.dto.request.UserSignUpDto;
 import mjuphotolab.photolabbe.domain.user.entity.Role;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 import mjuphotolab.photolabbe.domain.user.repository.UserRepository;
 
 @Service
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
@@ -19,21 +21,21 @@ public class UserService {
 	private final PasswordEncoder passwordEncoder;
 
 	public void signUp(UserSignUpDto userSignUpDto) {
-		userRepository.findByEmail(userSignUpDto.getEmail())
-			.orElseThrow(() -> new IllegalArgumentException("[Error] 이미 존재하는 이메일입니다."));
-
-		userRepository.findByNickname(userSignUpDto.getNickname())
-			.orElseThrow(() -> new IllegalArgumentException("[Error] 이미 존재하는 닉네임입니다."));
+		if (userRepository.findByEmail(userSignUpDto.getEmail()).isPresent()) {
+			throw new IllegalArgumentException("[Error] 이미 존재하는 이메일입니다.");
+		}
 
 		User user = User.builder()
 			.email(userSignUpDto.getEmail())
 			.password(userSignUpDto.getPassword())
 			.nickname(userSignUpDto.getNickname())
+			.studentNumber(userSignUpDto.getStudentNumber())
 			.role(Role.USER)
 			.build();
 
 		user.passwordEncode(passwordEncoder);
 		userRepository.save(user);
+		log.info("회원 저장 성공");
 	}
 
 	public User findUser(final String oauthId) {

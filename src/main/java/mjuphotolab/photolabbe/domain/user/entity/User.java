@@ -32,6 +32,8 @@ public class User {
 
 	private String email;
 
+	private String studentNumber;
+
 	@Enumerated(EnumType.STRING)
 	private SocialType socialType;
 
@@ -41,6 +43,7 @@ public class User {
 	private Role role;
 
 	private String refreshToken;
+
 
 	public void authorizeUser() {
 		this.role = Role.USER;

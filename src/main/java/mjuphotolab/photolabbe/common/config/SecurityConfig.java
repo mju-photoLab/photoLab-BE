@@ -21,12 +21,17 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 /**
  * Spring Security 6에서 websecurityconfigureradapter가 deprecated가 되고 SecurityFilterChain bean을 생성하도록 변경되었습니다.
@@ -48,12 +53,23 @@ public class SecurityConfig {
 	private static final String API_PREFIX = "/api";
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring()
+			.requestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+			.requestMatchers(new AntPathRequestMatcher("/favicon.ico"))
+			.requestMatchers(new AntPathRequestMatcher("/css/**"))
+			.requestMatchers(new AntPathRequestMatcher("/js/**"))
+			.requestMatchers(new AntPathRequestMatcher("/img/**"))
+			.requestMatchers(new AntPathRequestMatcher("/lib/**"));
+	}
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
 		http
 			.csrf(AbstractHttpConfigurer::disable)
 			.formLogin(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
-			.headers(AbstractHttpConfigurer::disable)
+			.headers(HeadersConfigurer::disable) //H2 콘솔(iframe)을 사용하기 때문에 비활성화
 
 			.sessionManagement(sessionManagement ->
 				sessionManagement
@@ -65,14 +81,10 @@ public class SecurityConfig {
 
 			.authorizeHttpRequests(authorizeHttpRequests ->
 				authorizeHttpRequests
-					.requestMatchers(
-						API_PREFIX + "/auth/**",
-						API_PREFIX + "/css/**",
-						API_PREFIX + "/images/**",
-						API_PREFIX + "//js/**",
-						API_PREFIX + "/"
-					).permitAll()
-					.requestMatchers(API_PREFIX + "/admin/**").hasRole("ADMIN")
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/")).permitAll()
+					.requestMatchers(new MvcRequestMatcher(introspector, "/sign-up")).permitAll()
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "oauth2/sign-up")).hasRole("GUEST")
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/admin/**")).hasRole("ADMIN")
 					.anyRequest().authenticated())
 
 			.oauth2Login(oauth2Configurer ->
