@@ -2,23 +2,21 @@
 spring:
   config:
     activate:
-      on-profile: "local"
+      on-profile: local
 
   datasource:
+    url: jdbc:h2:tcp://localhost/~/photolab;NON_KEYWORDS=user;
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/photolab
     username: sa
     password:
 
   jpa:
+    hibernate:
+      ddl-auto: validate
+    show_sql: true
     properties:
       hibernate:
-        format_sql: 'true'
-        show_sql: 'true'
-
-    hibernate:
-      ddl-auto: create
-
+        format_sql: true
     defer-datasource-initialization: true # (2.5~) Hibernate 초기화 이후 data.sql 실행
 
   sql:
