@@ -61,6 +61,10 @@ public class User {
 		this.password = passwordEncoder.encode(updatePassword);
 	}
 
+	public void updateRoleTOoAdmin() {
+		this.role = Role.ADMIN;
+	}
+
 	public void updateRefreshToken(String updateRefreshToken) {
 		this.refreshToken = updateRefreshToken;
 	}
