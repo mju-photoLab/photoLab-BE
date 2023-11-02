@@ -16,28 +16,14 @@ public class Exhibition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "title", updatable = false)
+    private String user_id;
     private String title;
-
-    @Column(name = "content", updatable = false)
     private String content;
 
-    @Column(name = "name", updatable = false)
-    private String name;
-
-    @Column(name = "likes", updatable = false)
-    private int likes;
-
-    @Column(name = "createdAt", updatable = false)
-    private LocalDate createdAt;
-
     @Builder
-    public Exhibition(String title, String content, String name, int likes, LocalDate createdAt) {
+    public Exhibition(String user_id, String title, String content) {
+        this.user_id = user_id;
         this.title = title;
         this.content = content;
-        this.name = name;
-        this.likes = likes;
-        this.createdAt = createdAt;
     }
 }
