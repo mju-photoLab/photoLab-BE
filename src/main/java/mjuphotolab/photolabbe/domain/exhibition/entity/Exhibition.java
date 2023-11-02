@@ -15,7 +15,6 @@ public class Exhibition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
     private Long id;
 
     @Column(name = "title", updatable = false)
