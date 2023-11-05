@@ -42,4 +42,11 @@ public class UserService {
 		return userRepository.findByOauthId(oauthId)
 			.orElseThrow(() -> new IllegalArgumentException("[Error] 사용자를 찾을 수 없습니다."));
 	}
+
+	public Long setAdmin(final Long userId) {
+		User user = userRepository.findById(userId)
+			.orElseThrow(() -> new IllegalArgumentException("[Error] 사용자를 찾을 수 없습니다."));
+		user.updateRoleTOoAdmin();
+		return user.getId();
+	}
 }

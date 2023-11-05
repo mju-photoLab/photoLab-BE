@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import mjuphotolab.photolabbe.domain.user.entity.SocialType;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 
-@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findByOauthId(final String oauthId);
 
