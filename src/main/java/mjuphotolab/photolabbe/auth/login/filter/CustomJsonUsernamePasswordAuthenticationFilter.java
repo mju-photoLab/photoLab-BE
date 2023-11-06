@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.common.login.filter;
+package mjuphotolab.photolabbe.auth.login.filter;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class CustomJsonUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
-	private static final String DEFAULT_LOGIN_REQUEST_URL = "/login"; // "/login"으로 오는 요청을 처리
+	private static final String DEFAULT_LOGIN_REQUEST_URL = "/api/auth/sign-in"; // "/login"으로 오는 요청을 처리
 	private static final String HTTP_METHOD = "POST"; // 로그인 HTTP 메소드는 POST
 	private static final String CONTENT_TYPE = "application/json"; // JSON 타입의 데이터로 오는 로그인 요청만 처리
 	private static final String USERNAME_KEY = "email"; // 회원 로그인 시 이메일 요청 JSON Key : "email"
