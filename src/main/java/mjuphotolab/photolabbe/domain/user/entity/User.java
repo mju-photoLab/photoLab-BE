@@ -2,6 +2,7 @@ package mjuphotolab.photolabbe.domain.user.entity;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -13,15 +14,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import mjuphotolab.photolabbe.common.BaseEntity;
 
 @Entity
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
 	private Long id;
 
 	private String oauthId;
@@ -34,6 +37,8 @@ public class User {
 
 	private String studentNumber;
 
+	private String imageUrl;
+
 	@Enumerated(EnumType.STRING)
 	private SocialType socialType;
 
@@ -43,7 +48,6 @@ public class User {
 	private Role role;
 
 	private String refreshToken;
-
 
 	public void authorizeUser() {
 		this.role = Role.USER;
@@ -61,8 +65,8 @@ public class User {
 		this.password = passwordEncoder.encode(updatePassword);
 	}
 
-	public void updateRoleTOoAdmin() {
-		this.role = Role.ADMIN;
+	public void updateRole(Role role) {
+		this.role = role != null ? role : this.role;
 	}
 
 	public void updateRefreshToken(String updateRefreshToken) {
