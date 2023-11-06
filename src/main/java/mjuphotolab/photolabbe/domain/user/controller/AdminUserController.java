@@ -18,7 +18,7 @@ public class AdminUserController {
 	private final UserService userService;
 	@PatchMapping("/editRole")
 	public Long updateRoleToAdmin(@LoginUser User user) {
-		return userService.setAdmin(user.getId());
+		return userService.changeRole(user.getId());
 	}
 
 	@GetMapping("/jwt-test")
