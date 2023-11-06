@@ -3,15 +3,15 @@ package mjuphotolab.photolabbe.common.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
-import mjuphotolab.photolabbe.common.jwt.filter.JwtAuthenticationProcessingFilter;
-import mjuphotolab.photolabbe.common.jwt.service.JwtService;
-import mjuphotolab.photolabbe.common.login.filter.CustomJsonUsernamePasswordAuthenticationFilter;
-import mjuphotolab.photolabbe.common.login.handler.LoginFailureHandler;
-import mjuphotolab.photolabbe.common.login.handler.LoginSuccessHandler;
-import mjuphotolab.photolabbe.common.login.service.LoginService;
-import mjuphotolab.photolabbe.common.ouath2.handler.OAuth2LoginFailureHandler;
-import mjuphotolab.photolabbe.common.ouath2.handler.OAuth2LoginSuccessHandler;
-import mjuphotolab.photolabbe.common.ouath2.service.CustomOAuth2UserService;
+import mjuphotolab.photolabbe.auth.jwt.filter.JwtAuthenticationProcessingFilter;
+import mjuphotolab.photolabbe.auth.jwt.service.JwtService;
+import mjuphotolab.photolabbe.auth.login.filter.CustomJsonUsernamePasswordAuthenticationFilter;
+import mjuphotolab.photolabbe.auth.login.handler.LoginFailureHandler;
+import mjuphotolab.photolabbe.auth.login.handler.LoginSuccessHandler;
+import mjuphotolab.photolabbe.auth.login.service.LoginService;
+import mjuphotolab.photolabbe.auth.ouath2.handler.OAuth2LoginFailureHandler;
+import mjuphotolab.photolabbe.auth.ouath2.handler.OAuth2LoginSuccessHandler;
+import mjuphotolab.photolabbe.auth.ouath2.service.CustomOAuth2UserService;
 import mjuphotolab.photolabbe.domain.user.repository.UserRepository;
 
 import org.springframework.context.annotation.Bean;
@@ -82,8 +82,12 @@ public class SecurityConfig {
 			.authorizeHttpRequests(authorizeHttpRequests ->
 				authorizeHttpRequests
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/")).permitAll()
-					.requestMatchers(new MvcRequestMatcher(introspector, "/sign-up")).permitAll()
-					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "oauth2/sign-up")).hasRole("GUEST")
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/auth/sign-up")).permitAll()
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/auth/sign-in")).permitAll()
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/competitions")).permitAll()
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/exhibitions")).permitAll()
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/impromptus")).permitAll()
+					// .requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/first")).permitAll()
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/admin/**")).hasRole("ADMIN")
 					.anyRequest().authenticated())
 
