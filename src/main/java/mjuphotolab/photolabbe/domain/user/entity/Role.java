@@ -1,9 +1,10 @@
 package mjuphotolab.photolabbe.domain.user.entity;
 
-import lombok.Getter;
+import java.util.Arrays;
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 
-@Getter
 @RequiredArgsConstructor
 public enum Role {
 	GUEST("ROLE_GUEST"),
@@ -11,4 +12,8 @@ public enum Role {
 	ADMIN("ROLE_ADMIN, ROLE_USER");
 
 	private final String roles;
+
+	public List<String> getRoles() {
+		return Arrays.asList(roles.split(","));
+	}
 }

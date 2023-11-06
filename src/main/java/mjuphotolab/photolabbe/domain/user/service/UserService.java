@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mjuphotolab.photolabbe.domain.user.controller.dto.request.UserSignUpDto;
+import mjuphotolab.photolabbe.auth.controller.dto.request.UserSignUpRequest;
 import mjuphotolab.photolabbe.domain.user.entity.Role;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 import mjuphotolab.photolabbe.domain.user.repository.UserRepository;
@@ -20,16 +20,16 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 
-	public void signUp(UserSignUpDto userSignUpDto) {
-		if (userRepository.findByEmail(userSignUpDto.getEmail()).isPresent()) {
+	public void signUp(UserSignUpRequest userSignUpRequest) {
+		if (userRepository.findByEmail(userSignUpRequest.getEmail()).isPresent()) {
 			throw new IllegalArgumentException("[Error] 이미 존재하는 이메일입니다.");
 		}
 
 		User user = User.builder()
-			.email(userSignUpDto.getEmail())
-			.password(userSignUpDto.getPassword())
-			.nickname(userSignUpDto.getNickname())
-			.studentNumber(userSignUpDto.getStudentNumber())
+			.email(userSignUpRequest.getEmail())
+			.password(userSignUpRequest.getPassword())
+			.nickname(userSignUpRequest.getNickname())
+			.studentNumber(userSignUpRequest.getStudentNumber())
 			.role(Role.USER)
 			.build();
 
@@ -38,15 +38,25 @@ public class UserService {
 		log.info("회원 저장 성공");
 	}
 
+	@Transactional(readOnly = true)
 	public User findUser(final String oauthId) {
 		return userRepository.findByOauthId(oauthId)
 			.orElseThrow(() -> new IllegalArgumentException("[Error] 사용자를 찾을 수 없습니다."));
 	}
 
-	public Long setAdmin(final Long userId) {
-		User user = userRepository.findById(userId)
+	public Long changeRole(final Long userId) {
+		User user =  userRepository.findById(userId)
 			.orElseThrow(() -> new IllegalArgumentException("[Error] 사용자를 찾을 수 없습니다."));
-		user.updateRoleTOoAdmin();
+		if (!isAdmin(user)) {
+			user.updateRole(Role.ADMIN);
+			return user.getId();
+		}
+		user.updateRole(Role.USER);
 		return user.getId();
 	}
+
+	private Boolean isAdmin(User user) {
+		return user.getRole().name().equals("ADMIN");
+	}
+
 }
