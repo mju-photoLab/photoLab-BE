@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.common.ouath2.service;
+package mjuphotolab.photolabbe.auth.ouath2.service;
 
 import java.util.Collections;
 import java.util.Map;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mjuphotolab.photolabbe.common.ouath2.CustomOAuth2User;
-import mjuphotolab.photolabbe.common.ouath2.OAuthAttributes;
+import mjuphotolab.photolabbe.auth.ouath2.CustomOAuth2User;
+import mjuphotolab.photolabbe.auth.ouath2.OAuthAttributes;
 import mjuphotolab.photolabbe.domain.user.entity.SocialType;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 import mjuphotolab.photolabbe.domain.user.repository.UserRepository;
@@ -55,7 +55,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 		// DefaultOAuth2User를 구현한 CustomOAuth2User 객체를 생성해서 반환
 		return new CustomOAuth2User(
-			Collections.singleton(new SimpleGrantedAuthority(createdUser.getRole().getRoles())),
+			Collections.singleton(new SimpleGrantedAuthority(createdUser.getRole().name())),
 			attributes,
 			extractAttributes.getNameAttributeKey(),
 			createdUser.getEmail(),

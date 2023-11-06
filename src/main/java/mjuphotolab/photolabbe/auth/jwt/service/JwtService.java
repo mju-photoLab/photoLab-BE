@@ -1,9 +1,12 @@
-package mjuphotolab.photolabbe.common.jwt.service;
+package mjuphotolab.photolabbe.auth.jwt.service;
 
 import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
@@ -14,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import mjuphotolab.photolabbe.auth.service.CustomUserDetailsService;
 import mjuphotolab.photolabbe.domain.user.repository.UserRepository;
 
 @Service
@@ -47,6 +51,7 @@ public class JwtService {
 	private static final String BEARER = "Bearer ";
 
 	private final UserRepository userRepository;
+	private final CustomUserDetailsService customUserDetailsService;
 
 	/**
 	 * AccessToken 생성 메소드
@@ -131,7 +136,7 @@ public class JwtService {
 			return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
 				.build() // 반환된 빌더로 JWT verifier 생성
 				.verify(accessToken) // accessToken을 검증하고 유효하지 않다면 예외 발생
-				.getClaim(EMAIL_CLAIM) // claim(Emial) 가져오기
+				.getClaim(EMAIL_CLAIM) // claim(Email) 가져오기
 				.asString());
 		} catch (Exception e) {
 			log.error("액세스 토큰이 유효하지 않습니다.");

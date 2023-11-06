@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.domain.user.controller.dto.request;
+package mjuphotolab.photolabbe.auth.controller.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UserSignUpDto {
+public class UserSignUpRequest {
 
 	@NotBlank(message = "이름을 입력해주세요.")
 	@Size(min = 2, max = 10, message = "이름은 2자에서 10자 사이여야합니다.")

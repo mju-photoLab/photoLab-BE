@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.common.login.handler;
+package mjuphotolab.photolabbe.auth.login.handler;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mjuphotolab.photolabbe.common.jwt.service.JwtService;
+import mjuphotolab.photolabbe.auth.jwt.service.JwtService;
 import mjuphotolab.photolabbe.domain.user.repository.UserRepository;
 
 @Slf4j

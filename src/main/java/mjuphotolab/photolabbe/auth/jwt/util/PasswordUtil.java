@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.common.jwt.util;
+package mjuphotolab.photolabbe.auth.jwt.util;
 
 import java.util.Random;
 

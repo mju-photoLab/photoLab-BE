@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.common.ouath2.userinfo;
+package mjuphotolab.photolabbe.auth.ouath2.userinfo;
 
 import java.util.Map;
 

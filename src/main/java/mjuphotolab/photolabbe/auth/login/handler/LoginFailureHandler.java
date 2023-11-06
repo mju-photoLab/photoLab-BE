@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.common.login.handler;
+package mjuphotolab.photolabbe.auth.login.handler;
 
 import java.io.IOException;
 

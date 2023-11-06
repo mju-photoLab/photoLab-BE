@@ -1,12 +1,12 @@
-package mjuphotolab.photolabbe.common.ouath2;
+package mjuphotolab.photolabbe.auth.ouath2;
 
 import java.util.Map;
 
 
 import lombok.Builder;
 import lombok.Getter;
-import mjuphotolab.photolabbe.common.ouath2.userinfo.KakaoOAuth2UserInfo;
-import mjuphotolab.photolabbe.common.ouath2.userinfo.OAuth2UserInfo;
+import mjuphotolab.photolabbe.auth.ouath2.userinfo.KakaoOAuth2UserInfo;
+import mjuphotolab.photolabbe.auth.ouath2.userinfo.OAuth2UserInfo;
 import mjuphotolab.photolabbe.domain.user.entity.Role;
 import mjuphotolab.photolabbe.domain.user.entity.SocialType;
 import mjuphotolab.photolabbe.domain.user.entity.User;
