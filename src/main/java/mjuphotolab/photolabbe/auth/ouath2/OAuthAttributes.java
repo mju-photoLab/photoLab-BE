@@ -57,6 +57,7 @@ public class OAuthAttributes {
 			.socialId(oauth2UserInfo.getId())
 			.email(oauth2UserInfo.getEmail())
 			.nickname(oauth2UserInfo.getNickname())
+			.imageUrl(oauth2UserInfo.getImageUrl())
 			.studentNumber("00000000") // 학번 초기화
 			.role(Role.GUEST)
 			.build();
