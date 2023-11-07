@@ -97,8 +97,12 @@ public class SecurityConfig {
 					.failureHandler(oAuth2LoginFailureHandler)
 					.userInfoEndpoint(userInfoEndpointConfig ->
 						userInfoEndpointConfig
-							.userService(customOAuth2UserService)));
-
+							.userService(customOAuth2UserService)))
+			.oauth2Login(oauth2Login ->
+				oauth2Login
+					.authorizationEndpoint(authorizationEndpoint ->
+						authorizationEndpoint
+							.baseUri("/")));
 		http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
 		http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
 
