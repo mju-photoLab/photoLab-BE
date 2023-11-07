@@ -21,6 +21,6 @@ public class AdminCompetitionController {
 	@PostMapping("/new")
 	public void registerCompetition(@RequestBody RegisterCompetitionRequest registerCompetitionRequest, @LoginUser
 		User user) {
-		competitionService.register(registerCompetitionRequest, user);
+		competitionService.register(registerCompetitionRequest, user.getId());
 	}
 }
