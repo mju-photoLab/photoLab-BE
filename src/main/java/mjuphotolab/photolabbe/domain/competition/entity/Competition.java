@@ -30,7 +30,7 @@ public class Competition extends BaseEntity {
 
 	private String title;
 	private String content;
-	private int awards;
+	private int awardCount;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
@@ -39,9 +39,11 @@ public class Competition extends BaseEntity {
 	private List<Photo> photos = new ArrayList<>();
 
 	@Builder
-	private Competition(final String title, final String content, final int awards) {
+	private Competition(final String title, final String content, final int awardCount, final User user, final List<Photo> photos) {
+		this.user = user;
 		this.title = title;
 		this.content = content;
-		this.awards = awards;
+		this.awardCount = awardCount;
+		this.photos = photos;
 	}
 }
