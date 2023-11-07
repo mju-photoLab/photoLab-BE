@@ -1,7 +1,5 @@
 package mjuphotolab.photolabbe.domain.competition.controller;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,10 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mjuphotolab.photolabbe.domain.competition.controller.dto.request.CompetitionRequest;
+import mjuphotolab.photolabbe.common.LoginUser;
+import mjuphotolab.photolabbe.domain.competition.controller.dto.request.RegisterCompetitionRequest;
 import mjuphotolab.photolabbe.domain.competition.controller.dto.response.CompetitionAllResponse;
 import mjuphotolab.photolabbe.domain.competition.controller.dto.response.CompetitionResponse;
 import mjuphotolab.photolabbe.domain.competition.service.CompetitionService;
+import mjuphotolab.photolabbe.domain.user.entity.User;
 
 @RestController
 @Slf4j
@@ -26,8 +26,9 @@ public class CompetitionController {
 	private final CompetitionService competitionService;
 
 	@PostMapping("/competitions/new")
-	public CompetitionResponse registerCompetition(@Valid @RequestBody CompetitionRequest competitionRequest) {
-		return competitionService.register(competitionRequest);
+	public CompetitionResponse registerCompetition(@Valid @RequestBody RegisterCompetitionRequest registerCompetitionRequest,
+		@LoginUser User user) {
+		return competitionService.register(registerCompetitionRequest, user);
 	}
 
 	@GetMapping("/competitions/{competitionId}")
@@ -36,7 +37,7 @@ public class CompetitionController {
 	}
 
 	@GetMapping("/competitions")
-	public List<CompetitionAllResponse> findCompetitions() {
-		return competitionService.findAllCompetitions();
+	public CompetitionAllResponse findCompetitions(@LoginUser User user) {
+		return competitionService.findAllCompetitions(user);
 	}
 }
