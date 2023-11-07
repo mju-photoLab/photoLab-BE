@@ -1,29 +1,41 @@
 package mjuphotolab.photolabbe.domain.photo.service;
 
-import jakarta.transaction.Transactional;
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
+import mjuphotolab.photolabbe.domain.competition.controller.dto.request.CompetitionPhotoDto;
+import mjuphotolab.photolabbe.domain.competition.entity.Competition;
+import mjuphotolab.photolabbe.domain.photo.controller.dto.response.PhotoDto;
 import mjuphotolab.photolabbe.domain.photo.entity.Photo;
 import mjuphotolab.photolabbe.domain.photo.repository.PhotoRepository;
-import org.springframework.stereotype.Service;
+import mjuphotolab.photolabbe.domain.user.entity.User;
+import mjuphotolab.photolabbe.domain.user.service.UserService;
 
-import java.util.Optional;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class PhotoService {
-    private final PhotoRepository photoRepository;
 
-    public Photo getPhoto(Long photoId) {
-        Optional<Photo> photo = photoRepository.findById(photoId);
+	private final PhotoRepository photoRepository;
 
-        return photo.orElseThrow(() -> new IllegalArgumentException("[Error] 사진이 존재하지 않습니다."));
-    }
+	private final UserService userService;
 
-    public void uploadPhoto(String title, String description, String imagePath) {
-        Photo photo = new Photo();
-        photo.setTitle(title);
-        photo.setDescription(description);
-        photo.setImagePath(imagePath);
-    }
+	@Transactional(readOnly = true)
+	public PhotoDto getPhoto(Long photoId) {
+		Photo photo = photoRepository.findById(photoId)
+			.orElseThrow(() -> new IllegalArgumentException("[Error] 사진을 찾을 수 없습니다."));
+
+		return PhotoDto.from(photo, userService.findByStudentNumber(photo.getStudentNumber()));
+	}
+
+	@Transactional
+	public void uploadCompetitionPhoto(List<CompetitionPhotoDto> competitionPhotoDtos, Competition competition,
+		User user) {
+		competitionPhotoDtos.stream()
+			.map(competitionPhotoDto -> competitionPhotoDto.toEntity(competition, user))
+			.map(photoRepository::save);
+	}
 }
