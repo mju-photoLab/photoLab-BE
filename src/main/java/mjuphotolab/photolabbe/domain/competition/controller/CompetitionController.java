@@ -19,25 +19,19 @@ import mjuphotolab.photolabbe.domain.user.entity.User;
 
 @RestController
 @Slf4j
-@RequestMapping("api")
+@RequestMapping("api/competitions")
 @RequiredArgsConstructor
 public class CompetitionController {
 
 	private final CompetitionService competitionService;
 
-	@PostMapping("/competitions/new")
-	public CompetitionResponse registerCompetition(@Valid @RequestBody RegisterCompetitionRequest registerCompetitionRequest,
-		@LoginUser User user) {
-		return competitionService.register(registerCompetitionRequest, user);
+	@GetMapping("/{competitionId}")
+	public CompetitionResponse findCompetition(@PathVariable Long competitionId, @LoginUser User user) {
+		return competitionService.findCompetition(competitionId, user.getId());
 	}
 
-	@GetMapping("/competitions/{competitionId}")
-	public CompetitionResponse findCompetition(@PathVariable Long competitionId) {
-		return competitionService.findById(competitionId);
-	}
-
-	@GetMapping("/competitions")
-	public CompetitionAllResponse findCompetitions(@LoginUser User user) {
-		return competitionService.findAllCompetitions(user);
+	@GetMapping
+	public CompetitionAllResponse findCompetitions() {
+		return competitionService.findAllCompetitions();
 	}
 }
