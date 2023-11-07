@@ -2,7 +2,9 @@ package mjuphotolab.photolabbe.domain.photo.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mjuphotolab.photolabbe.common.BaseEntity;
 import mjuphotolab.photolabbe.domain.competition.entity.Competition;
 import mjuphotolab.photolabbe.domain.exhibition.entity.Exhibition;
 import mjuphotolab.photolabbe.domain.user.entity.User;
@@ -10,7 +12,8 @@ import mjuphotolab.photolabbe.domain.user.entity.User;
 @Entity
 @Getter
 @Setter
-public class Photo {
+@NoArgsConstructor
+public class Photo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,5 +37,5 @@ public class Photo {
 
     private String imagePath;
 
-    private int like;
+    private int likes;
 }
