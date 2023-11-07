@@ -1,30 +1,32 @@
 package mjuphotolab.photolabbe.domain.competition.controller.dto.response;
 
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Getter;
-import mjuphotolab.photolabbe.domain.competition.entity.Competition;
+import mjuphotolab.photolabbe.common.controller.dto.UserProfileDto;
+import mjuphotolab.photolabbe.domain.user.entity.User;
 
 @Getter
 public class CompetitionAllResponse {
-	private Long id;
-	private String title;
-	private String content;
-	private int awards;
+
+	private final UserProfileDto userProfileDto;
+	private final int competitionCount;
+	private final List<CompetitionDto> competitionDtos;
 
 	@Builder
-	private CompetitionAllResponse(final Long id, final String title, final String content, final int awards) {
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.awards = awards;
+	private CompetitionAllResponse(final UserProfileDto userProfileDto, final int competitionCount, final List<CompetitionDto> competitionDtos) {
+		this.userProfileDto = userProfileDto;
+		this.competitionCount = competitionCount;
+		this.competitionDtos = competitionDtos;
 	}
 
-	public static CompetitionAllResponse of(final Competition competition) {
+
+	public static CompetitionAllResponse of(User user, List<CompetitionDto> competitionDtos) {
 		return CompetitionAllResponse.builder()
-			.id(competition.getId())
-			.title(competition.getTitle())
-			.content(competition.getContent())
-			.awards(competition.getAwards())
+			.userProfileDto(UserProfileDto.of(user))
+			.competitionCount(competitionDtos.size())
+			.competitionDtos(competitionDtos)
 			.build();
 	}
 }
