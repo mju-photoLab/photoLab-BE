@@ -11,14 +11,14 @@ import mjuphotolab.photolabbe.domain.photo.entity.Photo;
 public class CompetitionResponse {
 	private String title;
 	private String content;
-	private int awards;
+	private int awardCount;
 	private List<Photo> photos;
 
 	@Builder
-	private CompetitionResponse(final String title, final String content, final int awards, final List<Photo> photos) {
+	private CompetitionResponse(final String title, final String content, final int awardCount, final List<Photo> photos) {
 		this.title = title;
 		this.content = content;
-		this.awards = awards;
+		this.awardCount = awardCount;
 		this.photos = photos;
 	}
 
@@ -26,7 +26,7 @@ public class CompetitionResponse {
 		return CompetitionResponse.builder()
 			.title(competition.getTitle())
 			.content(competition.getContent())
-			.awards(competition.getAwards())
+			.awardCount(competition.getAwardCount())
 			// TODO: photo를 조회할 때 이런 쿼리를 통해 조회 쿼리 수 줄이기
 			.photos(competition.getPhotos())
 			.build();
