@@ -23,7 +23,7 @@ public class CompetitionDto {
 		this.createdAt = createdAt;
 	}
 
-	public static CompetitionDto of (final Competition competition) {
+	public static CompetitionDto of(final Competition competition) {
 		return CompetitionDto.builder()
 			.competitionId(competition.getId())
 			.title(competition.getTitle())
