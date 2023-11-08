@@ -1,5 +1,6 @@
 package mjuphotolab.photolabbe.domain.exhibition.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ public class Exhibition extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "exhibition_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
