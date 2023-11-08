@@ -14,7 +14,11 @@ import mjuphotolab.photolabbe.domain.empathy.entity.Empathy;
 import mjuphotolab.photolabbe.domain.exhibition.entity.Exhibition;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
+@Table(name = "photo")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Photo extends BaseEntity {
