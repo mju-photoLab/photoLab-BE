@@ -87,8 +87,8 @@ public class SecurityConfig {
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/competitions")).permitAll()
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/exhibitions")).permitAll()
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/impromptus")).permitAll()
-					// .requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/first")).permitAll()
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/admin/**")).hasRole("ADMIN")
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/api/users/first")).permitAll()
 					.anyRequest().authenticated())
 
 			.oauth2Login(oauth2Configurer ->
@@ -97,8 +97,12 @@ public class SecurityConfig {
 					.failureHandler(oAuth2LoginFailureHandler)
 					.userInfoEndpoint(userInfoEndpointConfig ->
 						userInfoEndpointConfig
-							.userService(customOAuth2UserService)));
-
+							.userService(customOAuth2UserService)))
+			.oauth2Login(oauth2Login ->
+				oauth2Login
+					.authorizationEndpoint(authorizationEndpoint ->
+						authorizationEndpoint
+							.baseUri("/")));
 		http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
 		http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
 

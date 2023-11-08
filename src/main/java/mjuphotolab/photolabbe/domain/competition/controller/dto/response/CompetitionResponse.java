@@ -5,30 +5,29 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import mjuphotolab.photolabbe.domain.competition.entity.Competition;
-import mjuphotolab.photolabbe.domain.photo.entity.Photo;
+import mjuphotolab.photolabbe.domain.photo.controller.dto.response.PhotoDto;
 
 @Getter
 public class CompetitionResponse {
-	private String title;
-	private String content;
-	private int awardCount;
-	private List<Photo> photos;
+	private final String title;
+	private final String content;
+	private final int awardCount;
+	private final List<PhotoDto> photoDtos;
 
 	@Builder
-	private CompetitionResponse(final String title, final String content, final int awardCount, final List<Photo> photos) {
+	private CompetitionResponse(final String title, final String content, final int awardCount, final List<PhotoDto> photoDtos) {
 		this.title = title;
 		this.content = content;
 		this.awardCount = awardCount;
-		this.photos = photos;
+		this.photoDtos = photoDtos;
 	}
 
-	public static CompetitionResponse of(Competition competition) {
+	public static CompetitionResponse from(Competition competition, List<PhotoDto> photoDtos) {
 		return CompetitionResponse.builder()
 			.title(competition.getTitle())
 			.content(competition.getContent())
 			.awardCount(competition.getAwardCount())
-			// TODO: photo를 조회할 때 이런 쿼리를 통해 조회 쿼리 수 줄이기
-			.photos(competition.getPhotos())
+			.photoDtos(photoDtos)
 			.build();
 	}
 }
