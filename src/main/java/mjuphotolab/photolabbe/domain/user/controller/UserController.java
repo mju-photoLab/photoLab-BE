@@ -10,7 +10,7 @@ import mjuphotolab.photolabbe.domain.user.entity.User;
 import mjuphotolab.photolabbe.domain.user.service.UserService;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -27,9 +27,9 @@ public class UserController {
 	/**
 	 * 초기 어드민 권한 부여를 위함
 	 */
-	// @PostMapping("/first")
-	// public void firstSet(@LoginUser User user) {
-	// 	userService.setAdmin(user.getId());
-	// }
+	@PostMapping("/first")
+	public void firstSet(@LoginUser User user) {
+		userService.changeRole(user.getId());
+	}
 
 }

@@ -87,8 +87,8 @@ public class SecurityConfig {
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/competitions")).permitAll()
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/exhibitions")).permitAll()
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/impromptus")).permitAll()
-					// .requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/first")).permitAll()
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/admin/**")).hasRole("ADMIN")
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/api/users/first")).permitAll()
 					.anyRequest().authenticated())
 
 			.oauth2Login(oauth2Configurer ->
