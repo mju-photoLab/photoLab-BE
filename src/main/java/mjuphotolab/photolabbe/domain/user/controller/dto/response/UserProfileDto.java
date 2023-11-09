@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.common.controller.dto;
+package mjuphotolab.photolabbe.domain.user.controller.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
