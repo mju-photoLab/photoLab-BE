@@ -2,16 +2,12 @@ package mjuphotolab.photolabbe.domain.competition.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mjuphotolab.photolabbe.common.LoginUser;
-import mjuphotolab.photolabbe.domain.competition.controller.dto.request.RegisterCompetitionRequest;
 import mjuphotolab.photolabbe.domain.competition.controller.dto.response.CompetitionAllResponse;
 import mjuphotolab.photolabbe.domain.competition.controller.dto.response.CompetitionResponse;
 import mjuphotolab.photolabbe.domain.competition.service.CompetitionService;
