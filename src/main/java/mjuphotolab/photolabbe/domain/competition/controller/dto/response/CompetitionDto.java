@@ -11,15 +11,12 @@ public class CompetitionDto {
 
 	private final Long competitionId;
 	private final String title;
-	private final String content;
 	private final LocalDateTime createdAt;
 
 	@Builder
-	private CompetitionDto(final Long competitionId, final String title, final String content,
-		final LocalDateTime createdAt) {
+	private CompetitionDto(final Long competitionId, final String title, final LocalDateTime createdAt) {
 		this.competitionId = competitionId;
 		this.title = title;
-		this.content = content;
 		this.createdAt = createdAt;
 	}
 
@@ -27,7 +24,6 @@ public class CompetitionDto {
 		return CompetitionDto.builder()
 			.competitionId(competition.getId())
 			.title(competition.getTitle())
-			.content(competition.getContent())
 			.createdAt(competition.getCreatedAt())
 			.build();
 	}
