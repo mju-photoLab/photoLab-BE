@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mjuphotolab.photolabbe.common.LoginUser;
 import mjuphotolab.photolabbe.domain.competition.controller.dto.response.CompetitionAllResponse;
-import mjuphotolab.photolabbe.domain.competition.controller.dto.response.CompetitionResponse;
+import mjuphotolab.photolabbe.domain.competition.controller.dto.response.DetailCompetitionResponse;
 import mjuphotolab.photolabbe.domain.competition.service.CompetitionService;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 
@@ -22,7 +22,7 @@ public class CompetitionController {
 	private final CompetitionService competitionService;
 
 	@GetMapping("/{competitionId}")
-	public CompetitionResponse findCompetition(@PathVariable Long competitionId, @LoginUser User user) {
+	public DetailCompetitionResponse findCompetition(@PathVariable Long competitionId, @LoginUser User user) {
 		return competitionService.findCompetition(competitionId, user.getId());
 	}
 
@@ -30,4 +30,5 @@ public class CompetitionController {
 	public CompetitionAllResponse findCompetitions() {
 		return competitionService.findAllCompetitions();
 	}
+
 }
