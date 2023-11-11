@@ -42,9 +42,10 @@ public class Exhibition extends BaseEntity{
     private List<Photo> photos = new ArrayList<>();
 
     @Builder
-    private Exhibition(User user, String title, String content) {
+    private Exhibition(User user, String title, String content, List<Photo> photos) {
         this.user = user;
         this.title = title;
         this.content = content;
+        this.photos = photos;
     }
 }
