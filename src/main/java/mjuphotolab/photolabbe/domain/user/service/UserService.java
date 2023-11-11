@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mjuphotolab.photolabbe.auth.controller.dto.request.UserSignUpRequest;
 import mjuphotolab.photolabbe.domain.photo.controller.dto.response.AwardPhotoDto;
+import mjuphotolab.photolabbe.domain.user.controller.dto.request.UpdateUserRequest;
 import mjuphotolab.photolabbe.domain.user.controller.dto.response.UserPageResponse;
 import mjuphotolab.photolabbe.domain.user.controller.dto.response.UserProfileDto;
 import mjuphotolab.photolabbe.domain.user.entity.Role;
@@ -27,7 +28,7 @@ public class UserService {
 	private final PasswordEncoder passwordEncoder;
 
 	@Transactional
-	public void signUp(UserSignUpRequest userSignUpRequest) {
+	public void signUp(final UserSignUpRequest userSignUpRequest) {
 		if (userRepository.findByEmail(userSignUpRequest.getEmail()).isPresent()) {
 			throw new IllegalArgumentException("[Error] 이미 존재하는 이메일입니다.");
 		}
@@ -77,6 +78,15 @@ public class UserService {
 		}
 		user.updateRole(Role.USER);
 		return user.getId();
+	}
+
+	@Transactional
+	public void updateUser(final Long userId, UpdateUserRequest updateUserRequest) {
+		User user = userRepository.findById(userId)
+			.orElseThrow(() -> new IllegalArgumentException("[Error] 사용자를 찾을 수 없습니다."));
+		user.updateInfo(updateUserRequest);
+
+
 	}
 
 	private Boolean isAdmin(User user) {
