@@ -14,12 +14,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mjuphotolab.photolabbe.domain.photo.controller.dto.request.DeletePhotoRequest;
 
 @Slf4j
 @Service
@@ -48,7 +48,7 @@ public class AwsS3Service {
 
 			try (InputStream inputStream = file.getInputStream()) {
 
-				String keyName = uploadFilePath + "/" + uploadFileName;
+				String keyName = uploadFilePath + uploadFileName;
 
 				amazonS3Client.putObject(new PutObjectRequest(bucket, keyName, inputStream, objectMetadata)
 					.withCannedAcl(CannedAccessControlList.PublicRead));
@@ -64,19 +64,12 @@ public class AwsS3Service {
 		return uploadFileUrls;
 	}
 
-	public String deleteFile(DeletePhotoRequest deletePhotoRequest) {
+	public String deleteFile(String fileName) {
 
 		String result = "success";
 
 		try {
-			String keyName = deletePhotoRequest.getUploadFilePath() + "/"
-				+ deletePhotoRequest.getUuidFileName();
-			boolean isObjectExist = amazonS3Client.doesObjectExist(bucket, keyName);
-			if (isObjectExist) {
-				amazonS3Client.deleteObject(bucket, keyName);
-			} else {
-				result = "file not found";
-			}
+			amazonS3Client.deleteObject(new DeleteObjectRequest(bucket, fileName));
 		} catch (Exception e) {
 			log.debug("Delete File failed", e);
 		}
