@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.domain.user.controller.dto;
+package mjuphotolab.photolabbe.domain.user.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

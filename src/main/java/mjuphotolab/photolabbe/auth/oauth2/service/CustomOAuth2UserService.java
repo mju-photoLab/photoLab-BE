@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.auth.ouath2.service;
+package mjuphotolab.photolabbe.auth.oauth2.service;
 
 import java.util.Collections;
 import java.util.Map;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mjuphotolab.photolabbe.auth.ouath2.CustomOAuth2User;
-import mjuphotolab.photolabbe.auth.ouath2.OAuthAttributes;
+import mjuphotolab.photolabbe.auth.oauth2.CustomOAuth2User;
+import mjuphotolab.photolabbe.auth.oauth2.OAuthAttributes;
 import mjuphotolab.photolabbe.domain.user.entity.SocialType;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 import mjuphotolab.photolabbe.domain.user.repository.UserRepository;

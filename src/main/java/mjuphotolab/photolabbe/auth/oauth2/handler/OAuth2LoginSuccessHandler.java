@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.auth.ouath2.handler;
+package mjuphotolab.photolabbe.auth.oauth2.handler;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mjuphotolab.photolabbe.auth.jwt.service.JwtService;
-import mjuphotolab.photolabbe.auth.ouath2.CustomOAuth2User;
+import mjuphotolab.photolabbe.auth.oauth2.CustomOAuth2User;
 import mjuphotolab.photolabbe.domain.user.entity.Role;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 import mjuphotolab.photolabbe.domain.user.repository.UserRepository;
