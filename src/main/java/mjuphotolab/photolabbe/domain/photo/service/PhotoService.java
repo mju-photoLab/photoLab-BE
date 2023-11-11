@@ -31,11 +31,22 @@ public class PhotoService {
 		return PhotoDto.from(photo, userService.findByStudentNumber(photo.getStudentNumber()));
 	}
 
-	@Transactional
-	public void uploadCompetitionPhoto(List<CompetitionPhotoDto> competitionPhotoDtos, Competition competition,
-		User user) {
-		competitionPhotoDtos.stream()
-			.map(competitionPhotoDto -> competitionPhotoDto.toEntity(competition, user))
-			.map(photoRepository::save);
+	public void deletePhoto(Long photoId) {
+		Photo photo = photoRepository.findById(photoId)
+				.orElseThrow(() -> new IllegalArgumentException("[Error] 사진을 찾을 수 없습니다."));
+		photoRepository.delete(photo);
+	}
+
+	@Transactional(readOnly = true)
+	public List<BestPhotoDto> findBestPhotos() {
+		Pageable pageable = PageRequest.of(0, 4);
+		List<Photo> photos = photoRepository.getBestPhotos(pageable);
+		return photos.stream()
+			.map(photo -> BestPhotoDto.from(photo, getNickname(photo)))
+			.collect(Collectors.toList());
+	}
+
+	private String getNickname(final Photo photo) {
+		return userService.findByStudentNumber(photo.getStudentNumber()).getNickname();
 	}
 }
