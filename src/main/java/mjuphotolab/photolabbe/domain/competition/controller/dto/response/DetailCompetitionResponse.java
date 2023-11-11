@@ -14,8 +14,7 @@ public class DetailCompetitionResponse {
 	private final List<PhotoDto> photoDtos;
 
 	@Builder
-	private DetailCompetitionResponse(final String title, final String content, final int awardCount,
-		final List<PhotoDto> photoDtos) {
+	private DetailCompetitionResponse(final String title, final String content, final List<PhotoDto> photoDtos) {
 		this.title = title;
 		this.content = content;
 		this.photoDtos = photoDtos;
