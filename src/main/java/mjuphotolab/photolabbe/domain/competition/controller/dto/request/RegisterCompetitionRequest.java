@@ -9,7 +9,6 @@ import mjuphotolab.photolabbe.domain.user.entity.User;
 @Getter
 public class RegisterCompetitionRequest {
 
-	private User user;
 	private String competitionTitle;
 	private String competitionContent;
 	private int awardCount;
