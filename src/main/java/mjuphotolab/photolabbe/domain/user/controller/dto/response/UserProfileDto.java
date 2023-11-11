@@ -6,8 +6,8 @@ import mjuphotolab.photolabbe.domain.user.entity.User;
 
 @Getter
 public class UserProfileDto {
-	private String imageUrl;
-	private String nickname;
+	private final String imageUrl;
+	private final String nickname;
 
 	@Builder
 	private UserProfileDto(final String imageUrl, final String nickname) {
