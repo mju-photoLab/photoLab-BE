@@ -11,21 +11,15 @@ public class PhotoDto {
 	private final Long photoId;
 	private final String title;
 	private final String photographer;
- 	private final String imagePath;
-	private final String description;
- 	private final Boolean likeState;
+	private final String imagePath;
 	private final int likeCount;
 
 	@Builder
-	private PhotoDto(final Long photoId, final String title, final String photographer, final String imagePath, final String description,
-		final Boolean likeState,
-		final int likeCount) {
+	private PhotoDto(final Long photoId, final String title, final String photographer, final String imagePath, final int likeCount) {
 		this.photoId = photoId;
 		this.title = title;
 		this.photographer = photographer;
 		this.imagePath = imagePath;
-		this.description = description;
-		this.likeState = likeState;
 		this.likeCount = likeCount;
 	}
 
@@ -34,10 +28,8 @@ public class PhotoDto {
 			.photoId(photo.getId())
 			.title(photo.getTitle())
 			.photographer(user.getNickname())
-			.description(photo.getDescription())
 			.imagePath(photo.getImagePath())
-			.likeState(false)
-			.likeCount(photo.getEmpathies().size())
+			.likeCount(0)
 			.build();
 	}
 }
