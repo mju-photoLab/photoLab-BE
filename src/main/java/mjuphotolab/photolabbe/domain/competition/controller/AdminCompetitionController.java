@@ -28,7 +28,7 @@ public class AdminCompetitionController {
 	@PostMapping("/new")
 	public void registerCompetition(
 		@RequestPart List<MultipartFile> multipartFiles,
-		@RequestBody RegisterCompetitionRequest registerCompetitionRequest,
+		@RequestPart RegisterCompetitionRequest registerCompetitionRequest,
 		@LoginUser User user) {
 		competitionService.registerCompetition(multipartFiles, registerCompetitionRequest, user.getId());
 	}
