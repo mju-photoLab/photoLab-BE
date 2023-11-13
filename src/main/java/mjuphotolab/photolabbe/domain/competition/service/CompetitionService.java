@@ -76,25 +76,14 @@ public class CompetitionService {
 		competition.update(updateCompetitionRequest);
 	}
 
-	private void uploadPhotos(final List<MultipartFile> multipartFiles,
-		final RegisterCompetitionRequest registerCompetitionRequest, final Competition competition, final User user) {
-
-		List<Photo> photos = new ArrayList<>();
+	private void uploadPhotos(final List<MultipartFile> multipartFiles, final Competition competition,
+		final User user) {
 
 		List<String> uploadFileUrls = awsS3Service.uploadImages(COMPETITION.name(), multipartFiles);
-		List<CompetitionPhotoDto> competitionPhotoDtos = registerCompetitionRequest.getCompetitionPhotoDtos();
 
-		int photosSize = uploadFileUrls.size();
-		for (int fileIndex = 0; fileIndex < photosSize; fileIndex++) {
-			// TODO 순서 맞게 들어가는지 확인
-			photos.add(getPhotoEntity(competition, user, competitionPhotoDtos, fileIndex, uploadFileUrls));
-		}
-
+		List<Photo> photos = uploadFileUrls.stream()
+			.map(url -> InitPhotoDto.toEntity(competition, user, url))
+			.collect(Collectors.toList());
 		photoRepository.saveAll(photos);
-	}
-
-	private Photo getPhotoEntity(final Competition competition, final User user,
-		final List<CompetitionPhotoDto> competitionPhotoDtos, final int fileIndex, final List<String> uploadFileUrls) {
-		return competitionPhotoDtos.get(fileIndex).toEntity(competition, user, uploadFileUrls.get(fileIndex));
 	}
 }
