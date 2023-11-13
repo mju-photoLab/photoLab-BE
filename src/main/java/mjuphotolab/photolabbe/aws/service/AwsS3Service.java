@@ -64,6 +64,32 @@ public class AwsS3Service {
 		return uploadFileUrls;
 	}
 
+	public String uploadImage(String photoDomainType, MultipartFile multipartFile) {
+		String uploadFilePath = photoDomainType + "/";
+		String originalFileName = multipartFile.getOriginalFilename();
+		assert originalFileName != null;
+		String uploadFileName = getUuidFileName(originalFileName);
+		String uploadFileUrl = "";
+
+		ObjectMetadata objectMetadata = new ObjectMetadata();
+		objectMetadata.setContentLength(multipartFile.getSize());
+		objectMetadata.setContentType(multipartFile.getContentType());
+
+		try (InputStream inputStream = multipartFile.getInputStream()) {
+
+			String keyName = uploadFilePath + uploadFileName;
+
+			amazonS3Client.putObject(new PutObjectRequest(bucket, keyName, inputStream, objectMetadata)
+				.withCannedAcl(CannedAccessControlList.PublicRead));
+
+			uploadFileUrl = amazonS3Client.getUrl(bucket, keyName).toString();
+		} catch (IOException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
+		}
+
+		return uploadFileUrl;
+	}
+
 	public String deleteFile(String fileName) {
 
 		String result = "success";

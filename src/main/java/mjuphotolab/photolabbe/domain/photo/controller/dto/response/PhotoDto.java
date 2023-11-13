@@ -13,23 +13,27 @@ public class PhotoDto {
 	private final String photographer;
 	private final String imagePath;
 	private final int likeCount;
+	private final boolean likeState;
 
 	@Builder
-	private PhotoDto(final Long photoId, final String title, final String photographer, final String imagePath, final int likeCount) {
+	private PhotoDto(final Long photoId, final String title, final String photographer, final String imagePath,
+		final int likeCount, final boolean likeState) {
 		this.photoId = photoId;
 		this.title = title;
 		this.photographer = photographer;
 		this.imagePath = imagePath;
 		this.likeCount = likeCount;
+		this.likeState = likeState;
 	}
 
-	public static PhotoDto from(Photo photo, User user) {
+	public static PhotoDto from(Photo photo, User user, boolean likeState) {
 		return PhotoDto.builder()
 			.photoId(photo.getId())
 			.title(photo.getTitle())
 			.photographer(user.getNickname())
 			.imagePath(photo.getImagePath())
 			.likeCount(0)
+			.likeState(likeState)
 			.build();
 	}
 }

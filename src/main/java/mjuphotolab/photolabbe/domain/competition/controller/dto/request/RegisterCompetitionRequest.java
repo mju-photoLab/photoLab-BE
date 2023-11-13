@@ -12,7 +12,6 @@ public class RegisterCompetitionRequest {
 	private String competitionTitle;
 	private String competitionContent;
 	private int awardCount;
-	private List<CompetitionPhotoDto> competitionPhotoDtos;
 
 	public Competition toEntity(User user) {
 		return Competition.builder()

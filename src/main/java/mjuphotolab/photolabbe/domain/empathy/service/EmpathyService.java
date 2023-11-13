@@ -54,4 +54,8 @@ public class EmpathyService {
 		empathyRepository.delete(empathy);
 		photo.updateLikeCount(--likeCount);
 	}
+
+	public boolean isLiked(User user, Photo photo) {
+		return empathyRepository.findByUserAndPhoto(user, photo).isPresent();
+	}
 }
