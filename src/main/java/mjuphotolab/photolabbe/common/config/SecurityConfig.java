@@ -11,7 +11,6 @@ import mjuphotolab.photolabbe.auth.login.handler.LoginSuccessHandler;
 import mjuphotolab.photolabbe.auth.login.service.LoginService;
 import mjuphotolab.photolabbe.auth.oauth2.handler.OAuth2LoginFailureHandler;
 import mjuphotolab.photolabbe.auth.oauth2.handler.OAuth2LoginSuccessHandler;
-import mjuphotolab.photolabbe.auth.oauth2.repository.CookieAuthorizationRequestRepository;
 import mjuphotolab.photolabbe.auth.oauth2.service.CustomOAuth2UserService;
 import mjuphotolab.photolabbe.domain.user.repository.UserRepository;
 
