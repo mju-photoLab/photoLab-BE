@@ -48,4 +48,9 @@ public class Exhibition extends BaseEntity{
         this.content = content;
         this.photos = photos;
     }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
