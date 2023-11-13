@@ -9,9 +9,10 @@ import mjuphotolab.photolabbe.auth.login.filter.CustomJsonUsernamePasswordAuthen
 import mjuphotolab.photolabbe.auth.login.handler.LoginFailureHandler;
 import mjuphotolab.photolabbe.auth.login.handler.LoginSuccessHandler;
 import mjuphotolab.photolabbe.auth.login.service.LoginService;
-import mjuphotolab.photolabbe.auth.ouath2.handler.OAuth2LoginFailureHandler;
-import mjuphotolab.photolabbe.auth.ouath2.handler.OAuth2LoginSuccessHandler;
-import mjuphotolab.photolabbe.auth.ouath2.service.CustomOAuth2UserService;
+import mjuphotolab.photolabbe.auth.oauth2.handler.OAuth2LoginFailureHandler;
+import mjuphotolab.photolabbe.auth.oauth2.handler.OAuth2LoginSuccessHandler;
+import mjuphotolab.photolabbe.auth.oauth2.repository.CookieAuthorizationRequestRepository;
+import mjuphotolab.photolabbe.auth.oauth2.service.CustomOAuth2UserService;
 import mjuphotolab.photolabbe.domain.user.repository.UserRepository;
 
 import org.springframework.context.annotation.Bean;
@@ -64,7 +65,8 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
+	public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws
+		Exception {
 		http
 			.csrf(AbstractHttpConfigurer::disable)
 			.formLogin(AbstractHttpConfigurer::disable)
@@ -88,7 +90,8 @@ public class SecurityConfig {
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/exhibitions")).permitAll()
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/impromptus")).permitAll()
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/admin/**")).hasRole("ADMIN")
-					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/api/users/first")).permitAll()
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/users/mypage")).permitAll()
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/users/first")).permitAll()
 					.anyRequest().authenticated())
 
 			.oauth2Login(oauth2Configurer ->
@@ -98,11 +101,11 @@ public class SecurityConfig {
 					.userInfoEndpoint(userInfoEndpointConfig ->
 						userInfoEndpointConfig
 							.userService(customOAuth2UserService)))
-			.oauth2Login(oauth2Login ->
-				oauth2Login
-					.authorizationEndpoint(authorizationEndpoint ->
-						authorizationEndpoint
-							.baseUri("/")));
+			//
+			// .oauth2Login(oauth2Login -> oauth2Login
+			// 	.redirectionEndpoint(redirectionEndpoint -> redirectionEndpoint
+			// 		.baseUri("api/users/mypage")));
+
 		http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
 		http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
 
