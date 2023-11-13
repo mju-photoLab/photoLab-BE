@@ -8,25 +8,22 @@ import mjuphotolab.photolabbe.domain.competition.entity.Competition;
 import mjuphotolab.photolabbe.domain.photo.controller.dto.response.PhotoDto;
 
 @Getter
-public class CompetitionResponse {
+public class DetailCompetitionResponse {
 	private final String title;
 	private final String content;
-	private final int awardCount;
 	private final List<PhotoDto> photoDtos;
 
 	@Builder
-	private CompetitionResponse(final String title, final String content, final int awardCount, final List<PhotoDto> photoDtos) {
+	private DetailCompetitionResponse(final String title, final String content, final List<PhotoDto> photoDtos) {
 		this.title = title;
 		this.content = content;
-		this.awardCount = awardCount;
 		this.photoDtos = photoDtos;
 	}
 
-	public static CompetitionResponse from(Competition competition, List<PhotoDto> photoDtos) {
-		return CompetitionResponse.builder()
+	public static DetailCompetitionResponse from(Competition competition, List<PhotoDto> photoDtos) {
+		return DetailCompetitionResponse.builder()
 			.title(competition.getTitle())
 			.content(competition.getContent())
-			.awardCount(competition.getAwardCount())
 			.photoDtos(photoDtos)
 			.build();
 	}

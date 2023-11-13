@@ -1,17 +1,16 @@
 package mjuphotolab.photolabbe.domain.empathy.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import mjuphotolab.photolabbe.domain.photo.entity.Photo;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 
 @Entity
-@Table(name = "empathy")
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Empathy {
 
     @Id
@@ -27,5 +26,9 @@ public class Empathy {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Boolean isActivated;
+    @Builder
+    private Empathy(final Photo photo, final User user) {
+        this.photo = photo;
+        this.user = user;
+    }
 }

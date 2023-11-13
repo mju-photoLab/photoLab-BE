@@ -1,7 +1,9 @@
 spring:
   profiles:
     default: dev
-    include: oauth
+    include:
+      - oauth
+      - aws
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -12,6 +14,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 jwt:
   secretKey: ${JWT_SECRET}

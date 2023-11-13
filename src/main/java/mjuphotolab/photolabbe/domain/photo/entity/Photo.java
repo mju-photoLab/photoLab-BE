@@ -1,24 +1,23 @@
 package mjuphotolab.photolabbe.domain.photo.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import mjuphotolab.photolabbe.common.BaseEntity;
 import mjuphotolab.photolabbe.domain.competition.entity.Competition;
-import mjuphotolab.photolabbe.domain.empathy.entity.Empathy;
 import mjuphotolab.photolabbe.domain.exhibition.entity.Exhibition;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-@Table(name = "photo")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Photo extends BaseEntity {
@@ -48,13 +47,16 @@ public class Photo extends BaseEntity {
 
 	private String studentNumber;
 
-	@OneToMany(mappedBy = "photo", cascade = CascadeType.ALL)
-	private List<Empathy> empathies = new ArrayList<>();
+	private int likeCount;
+
+	public void updateLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
 
 	@Builder
 	private Photo(final User user, final Exhibition exhibition, final Competition competition,
 		final String title, final String description,
-		final String imagePath, final String studentNumber) {
+		final String imagePath, final String studentNumber, final int likeCount) {
 		this.user = user;
 		this.exhibition = exhibition;
 		this.competition = competition;
@@ -62,5 +64,6 @@ public class Photo extends BaseEntity {
 		this.description = description;
 		this.imagePath = imagePath;
 		this.studentNumber = studentNumber;
+		this.likeCount = likeCount;
 	}
 }

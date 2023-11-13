@@ -18,6 +18,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import mjuphotolab.photolabbe.common.BaseEntity;
+import mjuphotolab.photolabbe.domain.competition.controller.dto.request.UpdateCompetitionRequest;
 import mjuphotolab.photolabbe.domain.photo.entity.Photo;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 
@@ -49,5 +50,11 @@ public class Competition extends BaseEntity {
 		this.content = content;
 		this.awardCount = awardCount;
 		this.photos = photos;
+	}
+
+	public void update(UpdateCompetitionRequest updateCompetitionRequest) {
+		this.title = updateCompetitionRequest.getTitle() != null ? updateCompetitionRequest.getTitle() : this.title;
+		this.content = updateCompetitionRequest.getContent() != null ? updateCompetitionRequest.getContent() : this.content;
+		this.awardCount = updateCompetitionRequest.getAwardCount();
 	}
 }

@@ -7,13 +7,12 @@ import mjuphotolab.photolabbe.domain.user.entity.User;
 
 @Getter
 public class CompetitionPhotoDto {
-	private String files;
+
 	private String title;
 	private String description;
-	private String imagePath;
 	private String studentNumber;
 
-	public Photo toEntity(Competition competition, User user) {
+	public Photo toEntity(Competition competition, User user, String imagePath) {
 		return Photo.builder()
 			.user(user)
 			.competition(competition)
