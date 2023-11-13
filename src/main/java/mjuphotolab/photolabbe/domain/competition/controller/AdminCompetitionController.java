@@ -37,4 +37,6 @@ public class AdminCompetitionController {
 	public void changeCompetition(@PathVariable Long competitionId, @RequestBody UpdateCompetitionRequest updateCompetitionRequest) {
 		competitionService.updateCompetition(competitionId, updateCompetitionRequest);
 	}
+
+	// @PostMapping("/{competitionId}/transform")
 }
