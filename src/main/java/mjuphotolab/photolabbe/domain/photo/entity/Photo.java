@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import mjuphotolab.photolabbe.common.BaseEntity;
+import mjuphotolab.photolabbe.domain.photo.controller.dto.request.PhotoRequest;
 import mjuphotolab.photolabbe.domain.competition.entity.Competition;
 import mjuphotolab.photolabbe.domain.exhibition.entity.Exhibition;
 import mjuphotolab.photolabbe.domain.user.entity.User;
@@ -51,6 +52,12 @@ public class Photo extends BaseEntity {
 
 	public void updateLikeCount(int likeCount) {
 		this.likeCount = likeCount;
+	}
+
+	public void updateInfo(PhotoRequest photoRequest) {
+		this.title = photoRequest.getTitle() != null ? photoRequest.getTitle() : this.title;
+		this.description = photoRequest.getDescription() != null ? photoRequest.getDescription() : this.description;
+		this.studentNumber = photoRequest.getStudentNumber() != null ? photoRequest.getStudentNumber() : this.studentNumber;
 	}
 
 	@Builder
