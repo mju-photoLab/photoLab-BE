@@ -6,12 +6,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
-import mjuphotolab.photolabbe.aws.PhotoDomainType;
 import mjuphotolab.photolabbe.aws.service.AwsS3Service;
 import mjuphotolab.photolabbe.domain.competition.entity.Competition;
 import mjuphotolab.photolabbe.domain.competition.repository.CompetitionRepository;
-import mjuphotolab.photolabbe.domain.photo.controller.dto.request.PhotoRequest;
+import mjuphotolab.photolabbe.domain.exhibition.entity.Exhibition;
+import mjuphotolab.photolabbe.domain.exhibition.repository.ExhibitionRepository;
+import mjuphotolab.photolabbe.domain.photo.controller.dto.request.PhotoCompetitionRequest;
 import mjuphotolab.photolabbe.domain.empathy.service.EmpathyService;
+import mjuphotolab.photolabbe.domain.photo.controller.dto.request.PhotoExhibitionRequest;
+import mjuphotolab.photolabbe.domain.photo.controller.dto.response.AwardPhotoDto;
 import mjuphotolab.photolabbe.domain.photo.controller.dto.response.BestPhotoDto;
 import mjuphotolab.photolabbe.domain.photo.controller.dto.response.PhotoDto;
 import mjuphotolab.photolabbe.domain.photo.entity.Photo;
@@ -32,6 +35,7 @@ public class PhotoService {
 
 	private final PhotoRepository photoRepository;
 	private final CompetitionRepository competitionRepository;
+	private final ExhibitionRepository exhibitionRepository;
 	private final EmpathyService empathyService;
 	private final UserService userService;
 	private final AwsS3Service awsS3Service;
@@ -60,19 +64,40 @@ public class PhotoService {
 			.collect(Collectors.toList());
 	}
 
-	public Long updatePhoto(Long photoId, PhotoRequest photoRequest) {
+	public Long updatePhoto(Long photoId, PhotoCompetitionRequest photoCompetitionRequest) {
 		Photo photo = photoRepository.findById(photoId)
 			.orElseThrow(() -> new IllegalArgumentException("[Error] 사진을 찾을 수 없습니다."));
-		photo.updateInfo(photoRequest);
+		photo.updateInfo(photoCompetitionRequest);
 		return photoId;
 	}
 
-	public void registerCompetitionPhoto(MultipartFile multipartFile, PhotoRequest photoRequest, User user) {
+	public void registerCompetitionPhoto(MultipartFile multipartFile, PhotoCompetitionRequest photoCompetitionRequest,
+		User user) {
 		String imagePath = awsS3Service.uploadImage(COMPETITION.name(), multipartFile);
-		Competition competition = competitionRepository.findById(photoRequest.getParentId())
+		Competition competition = competitionRepository.findById(photoCompetitionRequest.getParentId())
 			.orElseThrow(() -> new IllegalArgumentException("[Error] 해당 공모전을 찾을 수 없습니다."));
-		Photo photo = photoRequest.toEntity(competition, imagePath, user);
+		Photo photo = photoCompetitionRequest.toEntity(competition, imagePath, user);
 		photoRepository.save(photo);
+	}
+
+	public void registerExhibitionPhoto(MultipartFile multipartFile, PhotoExhibitionRequest photoExhibitionRequest,
+		User user) {
+		String imagePath = awsS3Service.uploadImage(COMPETITION.name(), multipartFile);
+		Exhibition exhibition = exhibitionRepository.findById(photoExhibitionRequest.getParentId())
+			.orElseThrow(() -> new IllegalArgumentException("[Error] 해당 전시회를 찾을 수 없습니다."));
+		Photo photo = photoExhibitionRequest.toEntity(exhibition, imagePath, user);
+		photoRepository.save(photo);
+	}
+
+	public void registerAll(List<Photo> photos) {
+		photoRepository.saveAll(photos);
+	}
+
+	public List<AwardPhotoDto> findAwardPhotosBy(String studentNumber) {
+		List<Photo> photos = photoRepository.findAllByStudentNumber(studentNumber);
+		return photos.stream()
+			.map(AwardPhotoDto::of)
+			.collect(Collectors.toList());
 	}
 
 	private String getNickname(final Photo photo) {
