@@ -1,6 +1,7 @@
 package mjuphotolab.photolabbe.domain.user.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mjuphotolab.photolabbe.auth.controller.dto.request.UserSignUpRequest;
+import mjuphotolab.photolabbe.domain.exhibition.service.ExhibitionService;
 import mjuphotolab.photolabbe.domain.photo.controller.dto.response.AwardPhotoDto;
 import mjuphotolab.photolabbe.domain.user.controller.dto.request.UpdateUserRequest;
+import mjuphotolab.photolabbe.domain.user.controller.dto.response.UserResponse;
 import mjuphotolab.photolabbe.domain.user.controller.dto.response.UserPageResponse;
 import mjuphotolab.photolabbe.domain.user.controller.dto.response.UserProfileDto;
 import mjuphotolab.photolabbe.domain.user.entity.Role;
@@ -24,7 +27,7 @@ import mjuphotolab.photolabbe.domain.user.repository.UserRepository;
 public class UserService {
 
 	private final UserRepository userRepository;
-	// private final ExhibitionService exhibitionService;
+	private final ExhibitionService exhibitionService;
 	private final PasswordEncoder passwordEncoder;
 
 	@Transactional
@@ -60,13 +63,12 @@ public class UserService {
 			.orElseThrow(() -> new IllegalArgumentException("[Error] 사용자를 찾을 수 없습니다."));
 	}
 
-	// TODO 마이페이지 찾는 로직
-	// public UserPageResponse findMyPage(Long userId) {
-	// 	User user = findUser(userId);
-	// 	List<AwardPhotoDto> awardPhotoDtos = exhibitionService.findByStudentNUmber(user.getStudentNumber());
-	//
-	// 	return UserPageResponse.from(user, awardPhotoDtos);
-	// }
+	public UserPageResponse findMyPage(Long userId) {
+		User user = findUser(userId);
+		List<AwardPhotoDto> awardPhotoDtos = exhibitionService.findAwardPhotosBy(user.getStudentNumber());
+
+		return UserPageResponse.from(user, awardPhotoDtos);
+	}
 
 	@Transactional
 	public Long changeRole(final Long userId) {
@@ -85,8 +87,13 @@ public class UserService {
 		User user = userRepository.findById(userId)
 			.orElseThrow(() -> new IllegalArgumentException("[Error] 사용자를 찾을 수 없습니다."));
 		user.updateInfo(updateUserRequest);
+	}
 
-
+	public List<UserResponse> findAll() {
+		List<User> users = userRepository.findAll();
+		return users.stream()
+			.map(UserResponse::of)
+			.collect(Collectors.toList());
 	}
 
 	private Boolean isAdmin(User user) {
