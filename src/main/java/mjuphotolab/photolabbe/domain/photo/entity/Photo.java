@@ -12,8 +12,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import mjuphotolab.photolabbe.common.BaseEntity;
-import mjuphotolab.photolabbe.domain.photo.controller.dto.request.PhotoRequest;
+import mjuphotolab.photolabbe.common.entity.BaseEntity;
+import mjuphotolab.photolabbe.domain.photo.controller.dto.request.PhotoCompetitionRequest;
 import mjuphotolab.photolabbe.domain.competition.entity.Competition;
 import mjuphotolab.photolabbe.domain.exhibition.entity.Exhibition;
 import mjuphotolab.photolabbe.domain.user.entity.User;
@@ -54,10 +54,13 @@ public class Photo extends BaseEntity {
 		this.likeCount = likeCount;
 	}
 
-	public void updateInfo(PhotoRequest photoRequest) {
-		this.title = photoRequest.getTitle() != null ? photoRequest.getTitle() : this.title;
-		this.description = photoRequest.getDescription() != null ? photoRequest.getDescription() : this.description;
-		this.studentNumber = photoRequest.getStudentNumber() != null ? photoRequest.getStudentNumber() : this.studentNumber;
+	public void updateInfo(PhotoCompetitionRequest photoCompetitionRequest) {
+		this.title = photoCompetitionRequest.getTitle() != null ? photoCompetitionRequest.getTitle() : this.title;
+		this.description = photoCompetitionRequest.getDescription() != null ? photoCompetitionRequest.getDescription() :
+			this.description;
+		this.studentNumber =
+			photoCompetitionRequest.getStudentNumber() != null ? photoCompetitionRequest.getStudentNumber() :
+				this.studentNumber;
 	}
 
 	@Builder

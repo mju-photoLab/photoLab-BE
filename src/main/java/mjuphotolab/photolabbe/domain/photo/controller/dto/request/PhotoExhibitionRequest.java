@@ -1,21 +1,21 @@
 package mjuphotolab.photolabbe.domain.photo.controller.dto.request;
 
 import lombok.Getter;
-import mjuphotolab.photolabbe.domain.competition.entity.Competition;
+import mjuphotolab.photolabbe.domain.exhibition.entity.Exhibition;
 import mjuphotolab.photolabbe.domain.photo.entity.Photo;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 
 @Getter
-public class PhotoRequest {
+public class PhotoExhibitionRequest {
 
 	private Long parentId;
 	private String title;
 	private String description;
 	private String studentNumber;
 
-	public Photo toEntity(Competition competition, String imagePath, User user) {
+	public Photo toEntity(Exhibition exhibition, String imagePath, User user) {
 		return Photo.builder()
-			.competition(competition)
+			.exhibition(exhibition)
 			.user(user)
 			.imagePath(imagePath)
 			.title(title)

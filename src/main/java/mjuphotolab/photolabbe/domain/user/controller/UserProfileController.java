@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import mjuphotolab.photolabbe.common.LoginUser;
+import mjuphotolab.photolabbe.common.meta.LoginUser;
 import mjuphotolab.photolabbe.domain.user.controller.dto.response.UserProfileDto;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 import mjuphotolab.photolabbe.domain.user.service.UserService;

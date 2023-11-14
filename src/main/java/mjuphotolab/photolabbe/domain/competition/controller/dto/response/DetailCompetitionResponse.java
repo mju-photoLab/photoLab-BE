@@ -11,20 +11,20 @@ import mjuphotolab.photolabbe.domain.photo.controller.dto.response.PhotoDto;
 public class DetailCompetitionResponse {
 	private final String title;
 	private final String content;
-	private final List<PhotoDto> photoDtos;
+	private final List<PhotoDto> photos;
 
 	@Builder
-	private DetailCompetitionResponse(final String title, final String content, final List<PhotoDto> photoDtos) {
+	private DetailCompetitionResponse(final String title, final String content, final List<PhotoDto> photos) {
 		this.title = title;
 		this.content = content;
-		this.photoDtos = photoDtos;
+		this.photos = photos;
 	}
 
-	public static DetailCompetitionResponse from(Competition competition, List<PhotoDto> photoDtos) {
+	public static DetailCompetitionResponse from(Competition competition, List<PhotoDto> photos) {
 		return DetailCompetitionResponse.builder()
 			.title(competition.getTitle())
 			.content(competition.getContent())
-			.photoDtos(photoDtos)
+			.photos(photos)
 			.build();
 	}
 }

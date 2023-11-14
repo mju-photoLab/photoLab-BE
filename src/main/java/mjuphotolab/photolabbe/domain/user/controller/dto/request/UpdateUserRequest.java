@@ -21,5 +21,6 @@ public class UpdateUserRequest {
 	@Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).+$", message = "비밀번호는 문자, 숫자, 기호가 1개 이상 포함되어야합니다.")
 	private String password;
 
+	@NotBlank(message = "학번을 입력해주세요.")
 	private String studentNumber;
 }

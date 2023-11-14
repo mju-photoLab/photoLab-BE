@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mjuphotolab.photolabbe.common.LoginUser;
+import mjuphotolab.photolabbe.common.meta.LoginUser;
 import mjuphotolab.photolabbe.domain.competition.controller.dto.response.CompetitionAllResponse;
 import mjuphotolab.photolabbe.domain.competition.controller.dto.response.DetailCompetitionResponse;
 import mjuphotolab.photolabbe.domain.competition.service.CompetitionService;

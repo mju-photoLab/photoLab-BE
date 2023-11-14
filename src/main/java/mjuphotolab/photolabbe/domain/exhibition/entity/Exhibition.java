@@ -14,7 +14,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import mjuphotolab.photolabbe.common.BaseEntity;
+import mjuphotolab.photolabbe.common.entity.BaseEntity;
+import mjuphotolab.photolabbe.domain.exhibition.controller.dto.request.UpdateExhibitionRequest;
 import mjuphotolab.photolabbe.domain.photo.entity.Photo;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 
@@ -24,33 +25,33 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Exhibition extends BaseEntity{
+public class Exhibition extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "exhibition_id")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "exhibition_id")
+	private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")  // user_id를 외래 키로 사용
-    private User user;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")  // user_id를 외래 키로 사용
+	private User user;
 
-    private String title;
-    private String content;
+	private String title;
+	private String content;
 
-    @OneToMany(mappedBy = "exhibition",cascade = CascadeType.ALL)
-    private List<Photo> photos = new ArrayList<>();
+	@OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL)
+	private List<Photo> photos = new ArrayList<>();
 
-    @Builder
-    private Exhibition(User user, String title, String content, List<Photo> photos) {
-        this.user = user;
-        this.title = title;
-        this.content = content;
-        this.photos = photos;
-    }
+	@Builder
+	private Exhibition(User user, String title, String content, List<Photo> photos) {
+		this.user = user;
+		this.title = title;
+		this.content = content;
+		this.photos = photos;
+	}
 
-    public void update(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
+	public void update(UpdateExhibitionRequest request) {
+		this.title = request.getTitle() != null ? request.getTitle() : this.title;
+		this.content = request.getContent() != null ? request.getContent() : this.content;
+	}
 }

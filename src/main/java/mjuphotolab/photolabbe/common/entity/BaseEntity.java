@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.common;
+package mjuphotolab.photolabbe.common.entity;
 
 import java.time.LocalDateTime;
 

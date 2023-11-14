@@ -1,4 +1,4 @@
-package mjuphotolab.photolabbe.common;
+package mjuphotolab.photolabbe.common.meta;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
