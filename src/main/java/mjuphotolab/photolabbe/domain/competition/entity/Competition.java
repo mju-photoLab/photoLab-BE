@@ -17,7 +17,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import mjuphotolab.photolabbe.common.BaseEntity;
+import mjuphotolab.photolabbe.common.entity.BaseEntity;
 import mjuphotolab.photolabbe.domain.competition.controller.dto.request.UpdateCompetitionRequest;
 import mjuphotolab.photolabbe.domain.photo.entity.Photo;
 import mjuphotolab.photolabbe.domain.user.entity.User;
@@ -44,7 +44,8 @@ public class Competition extends BaseEntity {
 	private List<Photo> photos = new ArrayList<>();
 
 	@Builder
-	private Competition(final String title, final String content, final int awardCount, final User user, final List<Photo> photos) {
+	private Competition(final String title, final String content, final int awardCount, final User user,
+		final List<Photo> photos) {
 		this.user = user;
 		this.title = title;
 		this.content = content;
@@ -54,7 +55,8 @@ public class Competition extends BaseEntity {
 
 	public void update(UpdateCompetitionRequest updateCompetitionRequest) {
 		this.title = updateCompetitionRequest.getTitle() != null ? updateCompetitionRequest.getTitle() : this.title;
-		this.content = updateCompetitionRequest.getContent() != null ? updateCompetitionRequest.getContent() : this.content;
+		this.content =
+			updateCompetitionRequest.getContent() != null ? updateCompetitionRequest.getContent() : this.content;
 		this.awardCount = updateCompetitionRequest.getAwardCount();
 	}
 }

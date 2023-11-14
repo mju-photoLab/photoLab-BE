@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import mjuphotolab.photolabbe.common.LoginUser;
+import mjuphotolab.photolabbe.common.meta.LoginUser;
 import mjuphotolab.photolabbe.domain.empathy.controller.dto.request.EmpathyDto;
 import mjuphotolab.photolabbe.domain.empathy.service.EmpathyService;
 import mjuphotolab.photolabbe.domain.user.entity.User;
