@@ -6,21 +6,21 @@ import mjuphotolab.photolabbe.domain.photo.entity.Photo;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 
 @Getter
-public class InitPhotoDto {
+public class PhotoCompetitionRequest {
 
+	private Long parentId;
 	private String title;
 	private String description;
 	private String studentNumber;
 
-	public static Photo toEntity(Competition competition, User user, String imagePath) {
+	public Photo toEntity(Competition competition, String imagePath, User user) {
 		return Photo.builder()
-			.user(user)
 			.competition(competition)
-			.title("title")
-			.description("description")
+			.user(user)
 			.imagePath(imagePath)
-			.studentNumber("studentNumber")
+			.title(title)
+			.description(description)
+			.studentNumber(studentNumber)
 			.build();
 	}
-
 }
