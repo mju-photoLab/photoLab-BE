@@ -48,7 +48,7 @@ public class CompetitionService {
 
 	@Transactional(readOnly = true)
 	public CompetitionAllResponse findAllCompetitions() {
-		List<Competition> competitions = competitionRepository.findAllBy();
+		List<Competition> competitions = competitionRepository.findAll();
 		List<CompetitionDto> competitionDtos = competitions.stream()
 			.map(CompetitionDto::of)
 			.toList();
