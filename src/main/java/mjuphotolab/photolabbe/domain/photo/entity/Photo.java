@@ -54,10 +54,13 @@ public class Photo extends BaseEntity {
 		this.likeCount = likeCount;
 	}
 
-	public void updateInfo(PhotoRequest photoRequest) {
-		this.title = photoRequest.getTitle() != null ? photoRequest.getTitle() : this.title;
-		this.description = photoRequest.getDescription() != null ? photoRequest.getDescription() : this.description;
-		this.studentNumber = photoRequest.getStudentNumber() != null ? photoRequest.getStudentNumber() : this.studentNumber;
+	public void updateInfo(PhotoCompetitionRequest photoCompetitionRequest) {
+		this.title = photoCompetitionRequest.getTitle() != null ? photoCompetitionRequest.getTitle() : this.title;
+		this.description = photoCompetitionRequest.getDescription() != null ? photoCompetitionRequest.getDescription() :
+			this.description;
+		this.studentNumber =
+			photoCompetitionRequest.getStudentNumber() != null ? photoCompetitionRequest.getStudentNumber() :
+				this.studentNumber;
 	}
 
 	@Builder
