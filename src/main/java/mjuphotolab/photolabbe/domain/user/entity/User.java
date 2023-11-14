@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import mjuphotolab.photolabbe.common.BaseEntity;
+import mjuphotolab.photolabbe.common.entity.BaseEntity;
 import mjuphotolab.photolabbe.domain.user.controller.dto.request.UpdateUserRequest;
 
 @Entity
@@ -78,7 +78,8 @@ public class User extends BaseEntity {
 		this.nickname = updateUserRequest.getNickname() != null ? updateUserRequest.getNickname() : this.nickname;
 		this.password = updateUserRequest.getPassword() != null ? updateUserRequest.getPassword() : this.password;
 		this.email = updateUserRequest.getEmail() != null ? updateUserRequest.getEmail() : this.email;
-		this.studentNumber = updateUserRequest.getStudentNumber() != null ? updateUserRequest.getStudentNumber() : this.studentNumber;
+		this.studentNumber =
+			updateUserRequest.getStudentNumber() != null ? updateUserRequest.getStudentNumber() : this.studentNumber;
 	}
 }
 
