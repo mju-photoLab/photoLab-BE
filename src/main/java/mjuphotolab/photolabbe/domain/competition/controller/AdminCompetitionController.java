@@ -37,16 +37,16 @@ public class AdminCompetitionController {
 		competitionService.registerCompetition(multipartFiles, registerCompetitionRequest, user.getId());
 	}
 
-	@PatchMapping("{competitionId}/edit")
+	@PatchMapping("/{competitionId}/edit")
 	public void changeCompetition(@PathVariable Long competitionId,
 		@RequestBody UpdateCompetitionRequest updateCompetitionRequest) {
 		competitionService.updateCompetition(competitionId, updateCompetitionRequest);
 	}
 
-	@PostMapping("/{competitionId}/transform")
-	public void transformCompetition(@PathVariable Long competitionId,
+	@PostMapping("/transform")
+	public void transformCompetition(
 		@RequestBody CompetitionToExhibitionRequest competitionToExhibitionRequest,
 		@LoginUser User user) {
-		competitionService.transformCompetition(competitionId, competitionToExhibitionRequest, user.getId());
+		competitionService.transformCompetition(competitionToExhibitionRequest, user.getId());
 	}
 }
