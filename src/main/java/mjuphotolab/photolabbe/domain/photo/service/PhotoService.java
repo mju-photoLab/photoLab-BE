@@ -20,7 +20,6 @@ import mjuphotolab.photolabbe.domain.photo.controller.dto.response.PhotoDto;
 import mjuphotolab.photolabbe.domain.photo.entity.Photo;
 import mjuphotolab.photolabbe.domain.photo.repository.PhotoRepository;
 import mjuphotolab.photolabbe.domain.user.entity.User;
-import mjuphotolab.photolabbe.domain.user.service.UserService;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +36,6 @@ public class PhotoService {
 	private final CompetitionRepository competitionRepository;
 	private final ExhibitionRepository exhibitionRepository;
 	private final EmpathyService empathyService;
-	private final UserService userService;
 	private final AwsS3Service awsS3Service;
 
 	@Transactional(readOnly = true)
@@ -45,7 +43,7 @@ public class PhotoService {
 		Photo photo = photoRepository.findById(photoId)
 			.orElseThrow(() -> new IllegalArgumentException("[Error] 사진을 찾을 수 없습니다."));
 
-		return PhotoDto.from(photo, userService.findByStudentNumber(photo.getStudentNumber()),
+		return PhotoDto.from(photo, user,
 			empathyService.isLiked(user, photo));
 	}
 
@@ -60,7 +58,7 @@ public class PhotoService {
 		Pageable pageable = PageRequest.of(0, 4);
 		List<Photo> photos = photoRepository.getBestPhotos(pageable);
 		return photos.stream()
-			.map(photo -> BestPhotoDto.from(photo, getNickname(photo)))
+			.map(BestPhotoDto::of)
 			.collect(Collectors.toList());
 	}
 
@@ -98,9 +96,5 @@ public class PhotoService {
 		return photos.stream()
 			.map(AwardPhotoDto::of)
 			.collect(Collectors.toList());
-	}
-
-	private String getNickname(final Photo photo) {
-		return userService.findByStudentNumber(photo.getStudentNumber()).getNickname();
 	}
 }

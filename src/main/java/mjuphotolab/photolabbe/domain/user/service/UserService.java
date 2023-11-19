@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mjuphotolab.photolabbe.auth.controller.dto.request.UserSignUpRequest;
-import mjuphotolab.photolabbe.domain.exhibition.service.ExhibitionService;
 import mjuphotolab.photolabbe.domain.photo.controller.dto.response.AwardPhotoDto;
+import mjuphotolab.photolabbe.domain.photo.service.PhotoService;
 import mjuphotolab.photolabbe.domain.user.controller.dto.request.UpdateUserRequest;
 import mjuphotolab.photolabbe.domain.user.controller.dto.response.UserResponse;
 import mjuphotolab.photolabbe.domain.user.controller.dto.response.UserPageResponse;
@@ -27,7 +27,7 @@ import mjuphotolab.photolabbe.domain.user.repository.UserRepository;
 public class UserService {
 
 	private final UserRepository userRepository;
-	private final ExhibitionService exhibitionService;
+	private final PhotoService photoService;
 	private final PasswordEncoder passwordEncoder;
 
 	@Transactional
@@ -36,13 +36,7 @@ public class UserService {
 			throw new IllegalArgumentException("[Error] 이미 존재하는 이메일입니다.");
 		}
 
-		User user = User.builder()
-			.email(userSignUpRequest.getEmail())
-			.password(userSignUpRequest.getPassword())
-			.nickname(userSignUpRequest.getNickname())
-			.studentNumber(userSignUpRequest.getStudentNumber())
-			.role(Role.USER)
-			.build();
+		User user = userSignUpRequest.toEntity();
 
 		user.passwordEncode(passwordEncoder);
 		userRepository.save(user);
@@ -58,14 +52,9 @@ public class UserService {
 		return UserProfileDto.of(user);
 	}
 
-	public User findByStudentNumber(final String studentNumber) {
-		return userRepository.findByStudentNumber(studentNumber)
-			.orElseThrow(() -> new IllegalArgumentException("[Error] 사용자를 찾을 수 없습니다."));
-	}
-
 	public UserPageResponse findMyPage(Long userId) {
 		User user = findUser(userId);
-		List<AwardPhotoDto> awardPhotoDtos = exhibitionService.findAwardPhotosBy(user.getStudentNumber());
+		List<AwardPhotoDto> awardPhotoDtos = photoService.findAwardPhotosBy(user.getStudentNumber());
 
 		return UserPageResponse.from(user, awardPhotoDtos);
 	}
