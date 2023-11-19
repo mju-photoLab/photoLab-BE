@@ -78,7 +78,7 @@ public class ExhibitionService {
 		exhibition.update(updateExhibitionRequest);
 	}
 
-	public void fromCompetition(CompetitionToExhibitionRequest request, List<Photo> photos, User user) {
+	public void toExhibition(CompetitionToExhibitionRequest request, List<Photo> photos, User user) {
 		Exhibition exhibition = request.toEntity(photos, user);
 		exhibitionRepository.save(exhibition);
 
