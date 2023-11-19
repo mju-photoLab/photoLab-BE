@@ -33,7 +33,7 @@ public class Exhibition extends BaseEntity {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")  // user_id를 외래 키로 사용
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	private String title;

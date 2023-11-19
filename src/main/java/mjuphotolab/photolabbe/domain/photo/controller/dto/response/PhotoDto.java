@@ -32,7 +32,7 @@ public class PhotoDto {
 			.title(photo.getTitle())
 			.photographer(user.getNickname())
 			.imagePath(photo.getImagePath())
-			.likeCount(0)
+			.likeCount(photo.getLikeCount())
 			.likeState(likeState)
 			.build();
 	}

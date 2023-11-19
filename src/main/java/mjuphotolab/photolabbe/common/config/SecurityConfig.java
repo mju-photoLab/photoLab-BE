@@ -85,12 +85,11 @@ public class SecurityConfig {
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/")).permitAll()
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/auth/sign-up")).permitAll()
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/auth/sign-in")).permitAll()
-					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/competitions")).permitAll()
-					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/exhibitions")).permitAll()
-					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/impromptus")).permitAll()
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/competitions/**")).permitAll()
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/exhibitions/**")).permitAll()
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/impromptus/**")).permitAll()
 					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/admin/**")).hasRole("ADMIN")
-					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/users/mypage")).permitAll()
-					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/users/first")).permitAll()
+					.requestMatchers(new MvcRequestMatcher(introspector, API_PREFIX + "/users/**")).permitAll()
 					.anyRequest().authenticated())
 
 			.oauth2Login(oauth2Configurer ->

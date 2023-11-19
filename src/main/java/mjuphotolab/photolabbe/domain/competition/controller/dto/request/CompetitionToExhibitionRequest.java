@@ -10,6 +10,7 @@ import mjuphotolab.photolabbe.domain.user.entity.User;
 @Getter
 public class CompetitionToExhibitionRequest {
 
+	private Long competitionId;
 	private String exhibitionTitle;
 	private String exhibitionContent;
 

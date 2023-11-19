@@ -93,7 +93,6 @@ public class AwsS3Service {
 	public String deleteFile(String fileName) {
 
 		String result = "success";
-
 		try {
 			amazonS3Client.deleteObject(new DeleteObjectRequest(bucket, fileName));
 		} catch (Exception e) {

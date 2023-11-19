@@ -20,11 +20,11 @@ public class BestPhotoDto {
 		this.imagePath = imagePath;
 	}
 
-	public static BestPhotoDto from(Photo photo, String photographer) {
+	public static BestPhotoDto of(Photo photo) {
 		return BestPhotoDto.builder()
 			.photoId(photo.getId())
 			.title(photo.getTitle())
-			.photographer(photographer)
+			.photographer(photo.getPhotographer())
 			.imagePath(photo.getImagePath())
 			.build();
 	}

@@ -12,6 +12,7 @@ public class PhotoCompetitionRequest {
 	private String title;
 	private String description;
 	private String studentNumber;
+	private String photographer;
 
 	public Photo toEntity(Competition competition, String imagePath, User user) {
 		return Photo.builder()
@@ -21,6 +22,7 @@ public class PhotoCompetitionRequest {
 			.title(title)
 			.description(description)
 			.studentNumber(studentNumber)
+			.photographer(photographer)
 			.build();
 	}
 }
