@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,7 +49,12 @@ public class Photo extends BaseEntity {
 
 	private String studentNumber;
 
+	private String photographer;
+
 	private int likeCount;
+
+	@Version
+	private Integer version;
 
 	public void updateLikeCount(int likeCount) {
 		this.likeCount = likeCount;
@@ -61,12 +67,19 @@ public class Photo extends BaseEntity {
 		this.studentNumber =
 			photoCompetitionRequest.getStudentNumber() != null ? photoCompetitionRequest.getStudentNumber() :
 				this.studentNumber;
+		this.photographer =
+			photoCompetitionRequest.getPhotographer() != null ? photoCompetitionRequest.getPhotographer() :
+				this.photographer;
+	}
+
+	public void updateExhibitionPhoto(Exhibition exhibition) {
+		this.exhibition = exhibition != null ? exhibition : this.exhibition;
 	}
 
 	@Builder
 	private Photo(final User user, final Exhibition exhibition, final Competition competition,
-		final String title, final String description,
-		final String imagePath, final String studentNumber, final int likeCount) {
+		final String title, final String description, final String imagePath, final String studentNumber,
+		final String photographer, final int likeCount) {
 		this.user = user;
 		this.exhibition = exhibition;
 		this.competition = competition;
@@ -74,6 +87,7 @@ public class Photo extends BaseEntity {
 		this.description = description;
 		this.imagePath = imagePath;
 		this.studentNumber = studentNumber;
+		this.photographer = photographer;
 		this.likeCount = likeCount;
 	}
 }
