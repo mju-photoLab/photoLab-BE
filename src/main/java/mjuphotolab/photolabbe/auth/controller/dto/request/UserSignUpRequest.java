@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import mjuphotolab.photolabbe.domain.user.entity.Role;
+import mjuphotolab.photolabbe.domain.user.entity.User;
 
 @Getter
 @NoArgsConstructor
@@ -23,4 +25,14 @@ public class UserSignUpRequest {
 
 	@NotBlank(message = "학번을 입력해주세요.")
 	private String studentNumber;
+
+	public User toEntity() {
+		return User.builder()
+			.nickname(nickname)
+			.email(email)
+			.password(password)
+			.studentNumber(studentNumber)
+			.role(Role.USER)
+			.build();
+	}
 }
