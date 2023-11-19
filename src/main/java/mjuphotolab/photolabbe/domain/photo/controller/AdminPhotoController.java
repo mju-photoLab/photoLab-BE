@@ -51,7 +51,7 @@ public class AdminPhotoController {
 		return awsS3Service.deleteFile(fileName);
 	}
 
-	@PatchMapping("{photoId}")
+	@PatchMapping("/{photoId}")
 	public Long updatePhoto(@PathVariable Long photoId, @RequestBody PhotoCompetitionRequest photoCompetitionRequest) {
 		return photoService.updatePhoto(photoId, photoCompetitionRequest);
 	}
