@@ -11,6 +11,7 @@ public class InitExhibitionPhotoDto {
 	private String title;
 	private String description;
 	private String studentNumber;
+	private String photographer;
 
 	public static Photo toEntity(Exhibition exhibition, User user, String imagePath) {
 		return Photo.builder()
@@ -20,6 +21,7 @@ public class InitExhibitionPhotoDto {
 			.description("description")
 			.imagePath(imagePath)
 			.studentNumber("studentNumber")
+			.photographer("photographer")
 			.build();
 	}
 

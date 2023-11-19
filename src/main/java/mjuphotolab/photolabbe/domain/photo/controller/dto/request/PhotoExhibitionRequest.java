@@ -12,6 +12,7 @@ public class PhotoExhibitionRequest {
 	private String title;
 	private String description;
 	private String studentNumber;
+	private String photographer;
 
 	public Photo toEntity(Exhibition exhibition, String imagePath, User user) {
 		return Photo.builder()
@@ -21,6 +22,7 @@ public class PhotoExhibitionRequest {
 			.title(title)
 			.description(description)
 			.studentNumber(studentNumber)
+			.photographer(photographer)
 			.build();
 	}
 }

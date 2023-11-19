@@ -11,6 +11,7 @@ public class InitCompetitionPhotoDto {
 	private String title;
 	private String description;
 	private String studentNumber;
+	private String photographer;
 
 	public static Photo toEntity(Competition competition, User user, String imagePath) {
 		return Photo.builder()
@@ -20,6 +21,7 @@ public class InitCompetitionPhotoDto {
 			.description("description")
 			.imagePath(imagePath)
 			.studentNumber("studentNumber")
+			.photographer("photographer")
 			.build();
 	}
 
