@@ -3,23 +3,26 @@ package mjuphotolab.photolabbe.domain.exhibition.service;
 import static mjuphotolab.photolabbe.aws.PhotoDomainType.*;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import mjuphotolab.photolabbe.aws.service.AwsS3Service;
 import mjuphotolab.photolabbe.domain.competition.controller.dto.request.CompetitionToExhibitionRequest;
 import mjuphotolab.photolabbe.domain.exhibition.controller.dto.request.RegisterExhibitionRequest;
 import mjuphotolab.photolabbe.domain.exhibition.controller.dto.request.UpdateExhibitionRequest;
+import mjuphotolab.photolabbe.domain.exhibition.controller.dto.response.CurrentExhibitionDto;
 import mjuphotolab.photolabbe.domain.exhibition.controller.dto.response.DetailExhibitionResponse;
 import mjuphotolab.photolabbe.domain.exhibition.controller.dto.response.ExhibitionAllResponse;
 import mjuphotolab.photolabbe.domain.exhibition.controller.dto.response.ExhibitionDto;
 import mjuphotolab.photolabbe.domain.exhibition.entity.Exhibition;
 import mjuphotolab.photolabbe.domain.exhibition.repository.ExhibitionRepository;
 import mjuphotolab.photolabbe.domain.photo.controller.dto.request.InitExhibitionPhotoDto;
-import mjuphotolab.photolabbe.domain.photo.controller.dto.response.AwardPhotoDto;
 import mjuphotolab.photolabbe.domain.photo.controller.dto.response.ExhibitionPhotoDto;
 import mjuphotolab.photolabbe.domain.photo.entity.Photo;
 import mjuphotolab.photolabbe.domain.photo.service.PhotoService;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 import mjuphotolab.photolabbe.domain.user.service.UserService;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -77,10 +81,22 @@ public class ExhibitionService {
 	public void fromCompetition(CompetitionToExhibitionRequest request, List<Photo> photos, User user) {
 		Exhibition exhibition = request.toEntity(photos, user);
 		exhibitionRepository.save(exhibition);
+
+		photos
+			.forEach(photo -> photo.updateExhibitionPhoto(exhibition));
 	}
 
-	public List<AwardPhotoDto> findAwardPhotosBy(String studentNumber) {
-		return photoService.findAwardPhotosBy(studentNumber);
+	public List<CurrentExhibitionDto> findCurrentExhibition() {
+		Pageable pageable = PageRequest.of(0, 4);
+		List<Exhibition> exhibitions = exhibitionRepository.findCurrentExhibitions(pageable);
+
+		return exhibitions.stream()
+			.map(exhibition -> CurrentExhibitionDto.from(exhibition.getId(), getFirstPhotoPath(exhibition)))
+			.collect(Collectors.toList());
+	}
+
+	private String getFirstPhotoPath(final Exhibition exhibition) {
+		return exhibition.getPhotos().get(0).getImagePath();
 	}
 
 	private void uploadPhotos(final List<MultipartFile> multipartFiles, final Exhibition exhibition,
