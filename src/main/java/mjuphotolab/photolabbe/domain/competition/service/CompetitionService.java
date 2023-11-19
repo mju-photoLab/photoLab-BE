@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import mjuphotolab.photolabbe.aws.service.AwsS3Service;
 import mjuphotolab.photolabbe.domain.competition.controller.dto.request.CompetitionToExhibitionRequest;
 import mjuphotolab.photolabbe.domain.competition.controller.dto.request.RegisterCompetitionRequest;
@@ -30,6 +31,7 @@ import mjuphotolab.photolabbe.domain.photo.repository.PhotoRepository;
 import mjuphotolab.photolabbe.domain.user.entity.User;
 import mjuphotolab.photolabbe.domain.user.service.UserService;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -80,15 +82,15 @@ public class CompetitionService {
 		competition.update(updateCompetitionRequest);
 	}
 
-	public void transformCompetition(Long competitionId, CompetitionToExhibitionRequest request, Long userId) {
+	public void transformCompetition(CompetitionToExhibitionRequest request, Long userId) {
 		User user = userService.findUser(userId);
-		Competition competition = competitionRepository.findById(competitionId)
+		Competition competition = competitionRepository.findById(request.getCompetitionId())
 			.orElseThrow(() -> new IllegalArgumentException("[Error] 해당 공모전을 찾을 수 없습니다."));
 
 		Pageable pageable = PageRequest.of(0, competition.getAwardCount());
-		List<Photo> photos = photoRepository.getAwardPhotos(competitionId, pageable);
+		List<Photo> photos = photoRepository.getAwardPhotos(request.getCompetitionId(), pageable);
 
-		exhibitionService.fromCompetition(request, photos, user);
+		exhibitionService.toExhibition(request, photos, user);
 	}
 
 	private void uploadPhotos(final List<MultipartFile> multipartFiles, final Competition competition,
