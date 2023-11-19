@@ -1,7 +1,10 @@
 package mjuphotolab.photolabbe.domain.exhibition.controller;
 
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import mjuphotolab.photolabbe.common.meta.LoginUser;
+import mjuphotolab.photolabbe.domain.exhibition.controller.dto.response.CurrentExhibitionDto;
 import mjuphotolab.photolabbe.domain.exhibition.controller.dto.response.DetailExhibitionResponse;
 import mjuphotolab.photolabbe.domain.exhibition.controller.dto.response.ExhibitionAllResponse;
 import mjuphotolab.photolabbe.domain.exhibition.service.ExhibitionService;
@@ -27,5 +30,10 @@ public class ExhibitionController {
 	@GetMapping("/{exhibitionId}")
 	public DetailExhibitionResponse findExhibition(@PathVariable Long exhibitionId, @LoginUser User user) {
 		return exhibitionService.findExhibition(exhibitionId, user.getId());
+	}
+
+	@GetMapping("/currentExhibition")
+	public List<CurrentExhibitionDto> findCurrentExhibition() {
+		return exhibitionService.findCurrentExhibition();
 	}
 }
