@@ -26,7 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
-	# 아래의 flow들이 차례대로 실행됩니다.
     steps:
     # 1) 기본 체크아웃
     - name: Checkout
