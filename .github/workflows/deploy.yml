@@ -7,8 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the "develop" branch
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 env:
   AWS_REGION: ap-northeast-2
@@ -41,7 +39,24 @@ jobs:
         run: chmod +x gradlew
         shell: bash
 
-      # 환경별 yml 파일 생성(1) - oauth
+      # 환경별 yml 파일 생성(1)
+      - name: make application.yml
+        run: |
+          mkdir ./src/main/resources
+          cd ./src/main/resources
+          touch ./application.yml
+          echo "${{ secrets.YML }}" > ./application.yml
+        shell: bash
+
+      # 환경별 yml 파일 생성(2) - dev
+      - name: make application-dev.yml
+        run: |
+          cd ./src/main/resources
+          touch ./application-dev.yml
+          echo "${{ secrets.YML_DEV }}" > ./application-dev.yml
+        shell: bash
+
+      # 환경별 yml 파일 생성(3) - oauth
       - name: make application-oauth.yml
         run: |
           cd ./src/main/resources
@@ -49,12 +64,20 @@ jobs:
           echo "${{ secrets.YML_OAUTH }}" > ./application-oauth.yml
         shell: bash
 
-      # 환경별 yml 파일 생성(2) - db
+      # 환경별 yml 파일 생성(4) - db
       - name: make application-db.yml
         run: |
           cd ./src/main/resources
           touch ./application-db.yml
           echo "${{ secrets.YML_DB }}" > ./application-db.yml
+        shell: bash
+
+      # 환경별 yml 파일 생성(5) - aws
+      - name: make application-aws.yml
+        run: |
+          cd ./src/main/resources
+          touch ./application-aws.yml
+          echo "${{ secrets.YML_AWS }}" > ./application-aws.yml
         shell: bash
       
       # 4) gradle 빌드
