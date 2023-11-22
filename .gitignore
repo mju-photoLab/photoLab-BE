@@ -35,7 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### 서버 설정 파일 ###
-/src/main/resources/application-jwt.yml
-/src/main/resources/application-oauth.yml
