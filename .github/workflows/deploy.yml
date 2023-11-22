@@ -36,20 +36,6 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Set yaml file
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: ./src/main/resources/application.yml
-        env:
-          spring.datasource.url: ${{secrets.AWS_ACCESS_KEY_ID}}
-          spring.datasource.username: ${{secrets.DB_USERNAME}}
-          spring.datasource.password: ${{secrets.DB_PASSWORD}}
-          spring.s3.bucket: ${{secrets.S3_BUCKET}}
-          sprig.s3.access-key: ${{secrets.AWS_ACCESS_KEY_ID}}
-          sprig.s3.secret-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          cloud.aws.region.static: ${{secrets.AWS_DEFAULT_REGION}}
-          jwt.secret: ${{secrets.JWT_SECRET}}
-
       # 3) gradlew 권한 설정
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
