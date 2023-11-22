@@ -4,12 +4,7 @@ spring:
     include:
       - oauth
       - aws
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+      - db
 
   jpa:
     hibernate:
