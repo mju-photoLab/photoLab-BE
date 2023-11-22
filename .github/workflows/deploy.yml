@@ -35,7 +35,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
-          
+
       # 3) gradlew 권한 설정
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -85,12 +85,7 @@ jobs:
           
       # AWS S3에 업로드
       - name: Upload to AWS S3
-        run: |
-          aws deploy push \
-            --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \ 
-            --ignore-hidden-files \
-            --s3-location s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip \
-            --source .
+        run: aws s3 cp --region $AWS_REGION ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/deploy/$GITHUB_SHA.zip --source .
             
       # AWS EC2에 Deploy
       - name: Deploy to AWS EC2 from S3
