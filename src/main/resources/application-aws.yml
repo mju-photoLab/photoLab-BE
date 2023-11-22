@@ -4,7 +4,7 @@ cloud:
       access-key: ${AWS_ACCESS_KEY_ID}
       secret-key: ${AWS_SECRET_ACCESS_KEY}
     s3:
-      bucket: ${s3.bucket}
+      bucket: ${S3_BUCKET}
     region:
       static: ${AWS_DEFAULT_REGION}
     stack:
