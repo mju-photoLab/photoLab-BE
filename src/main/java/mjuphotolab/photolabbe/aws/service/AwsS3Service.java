@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AwsS3Service {
 
-	@Value("${cloud.aws.bucket}")
+	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 
 	private final AmazonS3 amazonS3Client;
