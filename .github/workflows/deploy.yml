@@ -99,7 +99,7 @@ jobs:
           
       # AWS S3에 업로드
       - name: Upload to AWS S3
-        run: aws s3 cp --region $AWS_REGION ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/deploy/$GITHUB_SHA.zip --source .
+        run: aws s3 cp --region $AWS_REGION ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip --source .
             
       # AWS EC2에 Deploy
       - name: Deploy to AWS EC2 from S3
