@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import mjuphotolab.photolabbe.common.meta.LoginUser;
@@ -14,7 +15,7 @@ import mjuphotolab.photolabbe.domain.user.controller.dto.response.UserPageRespon
 import mjuphotolab.photolabbe.domain.user.entity.User;
 import mjuphotolab.photolabbe.domain.user.service.UserService;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("api/users/mypage")
 public class UserPageController {
@@ -22,14 +23,12 @@ public class UserPageController {
 	private final UserService userService;
 
 	@GetMapping
-	@ResponseBody
 	public UserPageResponse myPage(@LoginUser User user) {
 		return userService.findMyPage(user.getId());
 	}
 
 	@PatchMapping("/changeInfo")
-	public String changeInfo(@LoginUser User user, @RequestBody UpdateUserRequest updateUserRequest) {
+	public void changeInfo(@LoginUser User user, @RequestBody UpdateUserRequest updateUserRequest) {
 		userService.updateUser(user.getId(), updateUserRequest);
-		return "redirect:/api/users/mypage";
 	}
 }
