@@ -31,14 +31,14 @@ public class AdminPhotoController {
 
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@PostMapping("/newCompetitionPhoto")
-	public void registerCompetitionPhoto(@RequestPart MultipartFile multipartFile, @RequestPart PhotoCompetitionRequest photoCompetitionRequest,
+	public void registerCompetitionPhoto(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart PhotoCompetitionRequest photoCompetitionRequest,
 		@LoginUser User user) {
 		photoService.registerCompetitionPhoto(multipartFile, photoCompetitionRequest, user);
 	}
 
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@PostMapping("/newExhibitionPhoto")
-	public void registerExhibitionPhoto(@RequestPart MultipartFile multipartFile, @RequestPart PhotoExhibitionRequest photoExhibitionRequest,
+	public void registerExhibitionPhoto(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart PhotoExhibitionRequest photoExhibitionRequest,
 		@LoginUser User user) {
 		photoService.registerExhibitionPhoto(multipartFile, photoExhibitionRequest, user);
 	}
