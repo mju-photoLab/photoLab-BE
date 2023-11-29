@@ -9,7 +9,7 @@ spring:
         registration:
           kakao:
             client-id: ${KAKAO_CLIENT_ID}
-            redirect-uri: http://43.200.248.22:8080/login/oauth2/code/kakao
+            redirect-uri: http://ec2-43-200-248-22.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/kakao
             client-authentication-method: client_secret_post
             authorization-grant-type: authorization_code
             scope: profile_nickname, account_email, profile_image
