@@ -16,6 +16,7 @@ import mjuphotolab.photolabbe.domain.user.repository.UserRepository;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -28,6 +29,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -76,6 +78,9 @@ public class SecurityConfig {
 				sessionManagement
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
+			.exceptionHandling(e -> e
+				.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+
 			/**
 			 * 아래의 경로는 사용자의 권한과 상관없이 접근 가능
 			 */
@@ -98,11 +103,12 @@ public class SecurityConfig {
 					.failureHandler(oAuth2LoginFailureHandler)
 					.userInfoEndpoint(userInfoEndpointConfig ->
 						userInfoEndpointConfig
-							.userService(customOAuth2UserService)));
-			//
-			// .oauth2Login(oauth2Login -> oauth2Login
-			// 	.redirectionEndpoint(redirectionEndpoint -> redirectionEndpoint
-			// 		.baseUri("api/users/mypage")));
+							.userService(customOAuth2UserService)))
+
+			.oauth2Login(oauth2Login -> oauth2Login
+				.redirectionEndpoint(redirectionEndpoint -> redirectionEndpoint
+					.baseUri("api/users/mypage")));
+
 
 		http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
 		http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
