@@ -30,7 +30,7 @@ public class AdminExhibitionController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@PostMapping("/new")
 	public void registerExhibition
-		(@RequestPart List<MultipartFile> multipartFiles,
+		(@RequestPart(value = "file", required = false) List<MultipartFile> multipartFiles,
 			@RequestPart RegisterExhibitionRequest registerExhibitionRequest,
 			@LoginUser User user) {
 		exhibitionService.registerExhibition(multipartFiles, registerExhibitionRequest, user.getId());

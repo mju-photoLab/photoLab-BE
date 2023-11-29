@@ -31,7 +31,7 @@ public class AdminCompetitionController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@PostMapping("/new")
 	public void registerCompetition(
-		@RequestPart List<MultipartFile> multipartFiles,
+		@RequestPart(value = "file", required = false) List<MultipartFile> multipartFiles,
 		@RequestPart RegisterCompetitionRequest registerCompetitionRequest,
 		@LoginUser User user) {
 		competitionService.registerCompetition(multipartFiles, registerCompetitionRequest, user.getId());
